@@ -10,7 +10,7 @@ export function Table({name, current, capacity} : Props)
 
     return (
     <div className="component-container room-item-container">
-      <h2>
+      <h2 className="short-text">
         {name}
       </h2>
       <div>
@@ -18,6 +18,10 @@ export function Table({name, current, capacity} : Props)
         <span>
           {current} / {capacity}
         </span>
+      </div>
+      <div>
+        <span>תפוס</span>
+        <input type="checkbox"/>
       </div>
     </div>
   );
