@@ -1,12 +1,18 @@
 :root {
   --background-color-dark:#1a1a1a;
-  --background-color-light:#ffffff;
+  --background-color-light:#f8f8f8;
   --color-dark:#e0e0e0;
   --color-light:#2a2a2a;
   --primary-color-dark:#2e3a45;
   --primary-color-light:#8c9ba5;
   --pop-color-dark:#5fa0b0;
   --pop-color-light:#2e5c8a;
+  --good-dark:#a2e0ae;
+  --good-light:#6bcb77;
+  --ok-dark:#ebc870;
+  --ok-light:#ffc107;
+  --bad-dark:#e47f7f;
+  --bad-light:#d9534f;
   font-family: system-ui, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
 }
@@ -27,6 +33,7 @@ html, body {
 
 .room-item-container{
   background-color: var(--primary-color-dark);
+  border: 2px solid var(--pop-color-dark);
 }
 
 .flex-container {
@@ -43,6 +50,32 @@ html, body {
   white-space: nowrap;
 }
 
+.progress-container{
+  border-radius: 20px;
+  border: 2px solid var(--color-dark);
+  overflow: hidden;
+  width:100%;
+  height: 0.5em;
+  margin-block:3px;
+}
+
+.progress{
+  height:100%;
+}
+
+.good{
+ background-color: var(--good-dark);
+}
+
+.ok{
+  background-color: var(--ok-dark);
+}
+
+.bad{
+  background-color: var(--bad-dark);
+}
+
+
 @media (prefers-color-scheme: light) {
   :root {
     color: var(--color-light);
@@ -50,6 +83,23 @@ html, body {
   }
 
   .room-item-container{
-  background-color: var(--primary-color-light);
+    background-color: var(--primary-color-light);
+    border-color:var(--pop-color-light)
+  }
+
+  .good{
+    background-color: var(--good-light);
+  }
+
+  .ok{
+    background-color: var(--ok-light);
+  }
+
+  .bad{
+    background-color: var(--bad-light);
+  }
+
+  .progress-container{
+    border-color:var(--color-light)
   }
 }
