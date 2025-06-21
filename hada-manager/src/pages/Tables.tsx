@@ -12,7 +12,7 @@ export function Tables() {
 
     return (
         <div className="flex-container">
-            {tables.map(table => <Table name={table.name} current={table.occupancy} capacity={table.capacity}/>)}
+            {tables.map((table, index) => <Table key={index} name={table.name} current={table.occupancy} capacity={table.capacity}/>)}
         </div>
     )
 }
