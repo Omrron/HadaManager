@@ -1,5 +1,7 @@
 export interface Room
 {
+    assignedPeople : Person[],
+    tables : TableType[],
     name : string,
     capacity : number,
     occupancy : number
