@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ShortenText } from "../common/textFunctions";
 
 interface Props {
@@ -10,6 +11,7 @@ export function Table({ name, current, capacity }: Props) {
   const isFull = current >= capacity;
   const isNearFull = current / capacity >= 0.8;
   const shortText = ShortenText(name, 11);
+  let [reserved, setReserved] = useState(false);
 
   return (
     <div className="component-container room-item-container">
@@ -29,7 +31,7 @@ export function Table({ name, current, capacity }: Props) {
         </div>
       </div>
       <div className="center">
-        <input type="checkbox" />
+        <input type="checkbox" onClick={() => setReserved(!reserved)}/>
         <span>תפוס</span>
       </div>
     </div>
