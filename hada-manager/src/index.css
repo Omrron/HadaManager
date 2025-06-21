@@ -1,37 +1,39 @@
 :root {
-  --background-color-dark:#1a1a1a;
-  --background-color-light:#f8f8f8;
-  --color-dark:#e0e0e0;
-  --color-light:#2a2a2a;
-  --primary-color-dark:#2e3a45;
-  --primary-color-light:#8c9ba5;
-  --pop-color-dark:#5fa0b0;
-  --pop-color-light:#2e5c8a;
-  --good-dark:#a2e0ae;
-  --good-light:#6bcb77;
-  --ok-dark:#ebc870;
-  --ok-light:#ffc107;
-  --bad-dark:#e47f7f;
-  --bad-light:#d9534f;
+  --background-color-dark: #1a1a1a;
+  --background-color-light: #f8f8f8;
+  --color-dark: #e0e0e0;
+  --color-light: #2a2a2a;
+  --primary-color-dark: #2e3a45;
+  --primary-color-light: #8c9ba5;
+  --secondary-color-dark: #3a4753;
+  --secondary-color-light: #5c6f7f;
+  --pop-color-dark: #5fa0b0;
+  --pop-color-light: #2e5c8a;
+  --good-dark: #a2e0ae;
+  --good-light: #6bcb77;
+  --ok-dark: #ebc870;
+  --ok-light: #ffc107;
+  --bad-dark: #e47f7f;
+  --bad-light: #d9534f;
   font-family: system-ui, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
+  flex: 1;
 }
 
-html, body {
+html,
+body {
   margin: 0;
-  display: flex;
-  flex-direction: row-reverse;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
 }
 
-.component-container{
+.component-container {
   margin-inline: 1rem;
   margin-block: 0.5rem;
   padding: 10px;
+  width: 10.5rem;
 }
 
-.room-item-container{
+.room-item-container {
   background-color: var(--primary-color-dark);
   border: 2px solid var(--pop-color-dark);
 }
@@ -41,40 +43,33 @@ html, body {
   flex-flow: row wrap;
 }
 
-.short-text
-{
-  width: 6.5em;
-  height: 3em;
-  margin-bottom: 0;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
-
-.progress-container{
+.progress-container {
   border-radius: 20px;
   border: 2px solid var(--color-dark);
   overflow: hidden;
-  width:100%;
   height: 0.5em;
-  margin-block:3px;
+  margin-block: 3px;
 }
 
-.progress{
-  height:100%;
+.progress {
+  height: 100%;
 }
 
-.good{
- background-color: var(--good-dark);
+.center {
+  text-align: center;
 }
 
-.ok{
+.good {
+  background-color: var(--good-dark);
+}
+
+.ok {
   background-color: var(--ok-dark);
 }
 
-.bad{
+.bad {
   background-color: var(--bad-dark);
 }
-
 
 @media (prefers-color-scheme: light) {
   :root {
@@ -82,24 +77,24 @@ html, body {
     background-color: var(--background-color-light);
   }
 
-  .room-item-container{
+  .room-item-container {
     background-color: var(--primary-color-light);
-    border-color:var(--pop-color-light)
+    border-color: var(--pop-color-light);
   }
 
-  .good{
+  .good {
     background-color: var(--good-light);
   }
 
-  .ok{
+  .ok {
     background-color: var(--ok-light);
   }
 
-  .bad{
+  .bad {
     background-color: var(--bad-light);
   }
 
-  .progress-container{
-    border-color:var(--color-light)
+  .progress-container {
+    border-color: var(--color-light);
   }
 }
