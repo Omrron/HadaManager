@@ -1,12 +1,13 @@
 import { MdClose, MdOutlineCheck, MdPerson } from "react-icons/md";
 import { ShortenText } from "../common/textFunctions";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { miliToMinutes } from "../common/timeFunctions";
 
 interface Props {
   name: string;
 }
 
-const warningTime: number = 5;
+const changeTimes: number[] = [0.1, 0.1];
 const DEFAULT_DATE = new Date();
 
 function stateToColor(state: number) {
@@ -25,35 +26,48 @@ function stateToColor(state: number) {
 export function Person({ name }: Props) {
   const [foodState, setFoodState] = useState(0);
   const isEating = useRef(false);
-  const intervalId = useRef(0);
+  const timeoutId = useRef<number|null>(null);
   const startEatingTime = useRef(DEFAULT_DATE);
 
-  const idk = () => {
-    setFoodState((prev) => {
-      if (prev < 3) {
-        return prev + 1;
-      } else {
-        clearInterval(intervalId.current);
-        isEating.current = false;
-        return prev;
+
+  useEffect(() => {
+    if (!isEating.current) return;
+
+    if (foodState >= 3) {
+      isEating.current = false;
+      return;
+    }
+
+    if (timeoutId.current !== null) {
+      clearTimeout(timeoutId.current);
+    }
+
+    timeoutId.current = window.setTimeout(() => {
+      setFoodState(prev => prev + 1);
+    }, miliToMinutes(changeTimes[foodState-1]));
+
+    return () => {
+      if (timeoutId.current !== null) {
+        clearTimeout(timeoutId.current);
+        timeoutId.current = null;
       }
-    });
-  };
+    };
+  }, [foodState]);
 
   const startEating = () => {
     if (!isEating.current) {
-      setFoodState((prev) => prev + 1);
-      startEatingTime.current = new Date();
-      intervalId.current = setTimeout(idk, 1000);
       isEating.current = true;
+      startEatingTime.current = new Date();
+      setFoodState(1);
     }
   };
 
   const stopEating = () => {
-    if (isEating.current) {
-      clearTimeout(intervalId.current);
-      isEating.current = false;
+    if (timeoutId.current !== null) {
+      clearTimeout(timeoutId.current);
+      timeoutId.current = null;
     }
+    isEating.current = false;
     setFoodState(0);
   };
 
