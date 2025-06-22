@@ -1,6 +1,6 @@
 export interface Room
 {
-    assignedPeople : Person[],
+    assignedPeople : PersonType[],
     tables : TableType[],
     name : string,
     capacity : number,
@@ -15,7 +15,7 @@ export interface TableType
     reserved: boolean
 }
 
-export interface Person
+export interface PersonType
 {
     name : string,
     id : number
