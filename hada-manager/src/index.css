@@ -9,21 +9,40 @@
   --secondary-color-light: #5c6f7f;
   --pop-color-dark: #5fa0b0;
   --pop-color-light: #2e5c8a;
-  --good-dark: #a2e0ae;
-  --good-light: #6bcb77;
-  --ok-dark: #ebc870;
-  --ok-light: #ffc107;
-  --bad-dark: #e47f7f;
-  --bad-light: #d9534f;
+  --good-color-dark: #a2e0ae;
+  --good-color-light: #6bcb77;
+  --ok-color-dark: #ebc870;
+  --ok-color-light: #ffc107;
+  --bad-color-dark: #e47f7f;
+  --bad-color-light: #d9534f;
+  --background-color: var(--background-color-dark);
+  --primary-color: var(--primary-color-dark);
+  --secondary-color: var(--secondary-color-dark);
+  --pop-color: var(--pop-color-dark);
+  --color: var(--color-dark);
+  --good-color: var(--good-color-dark);
+  --ok-color: var(--ok-color-dark);
+  --bad-color: var(--bad-color-dark);
   font-family: system-ui, Helvetica, Arial, sans-serif;
   color-scheme: light dark;
   flex: 1;
+}
+
+button {
+  cursor: pointer;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
+}
+
+.layout-container {
+  display: grid;
+  background-color: transparent;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
 }
 
 .component-container {
@@ -34,8 +53,39 @@ body {
 }
 
 .room-item-container {
-  background-color: var(--primary-color-dark);
-  border: 2px solid var(--pop-color-dark);
+  background-color: var(--primary-color);
+  border: 2px solid var(--pop-color);
+}
+
+.person-container {
+  display: grid;
+  grid-template-columns: 6rem auto 10rem; 
+  background-color: var(--primary-color); 
+}
+
+.delete-button {
+  border-radius: 50%;
+  border: 1px solid var(--color);
+  background-color: var(--bad-color);
+  color:var(--color-dark);
+  width: 2rem;
+  height: 2rem;
+  position: absolute;
+  right: 0;
+  padding: 0;
+}
+
+.profile-image {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  border: 4px solid var(--color);
+  background-color: var(--pop-color);
+  color: var(--color);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
 }
 
 .flex-container {
@@ -45,7 +95,7 @@ body {
 
 .progress-container {
   border-radius: 20px;
-  border: 2px solid var(--color-dark);
+  border: 2px solid var(--color);
   overflow: hidden;
   height: 0.5em;
   margin-block: 3px;
@@ -59,42 +109,51 @@ body {
   text-align: center;
 }
 
+.short{
+  text-wrap: nowrap;
+}
+
+.relative {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.enter-button{
+  background-color: var(--good-color);
+}
+
+.depart-button{
+  background-color: var(--ok-color);
+}
+
+.centered-icon{
+  position:relative;
+  left:0;
+  top:0;
+}
+
 .good {
-  background-color: var(--good-dark);
+  background-color: var(--good-color);
 }
 
 .ok {
-  background-color: var(--ok-dark);
+  background-color: var(--ok-color);
 }
 
 .bad {
-  background-color: var(--bad-dark);
+  background-color: var(--bad-color);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: var(--color-light);
-    background-color: var(--background-color-light);
-  }
-
-  .room-item-container {
-    background-color: var(--primary-color-light);
-    border-color: var(--pop-color-light);
-  }
-
-  .good {
-    background-color: var(--good-light);
-  }
-
-  .ok {
-    background-color: var(--ok-light);
-  }
-
-  .bad {
-    background-color: var(--bad-light);
-  }
-
-  .progress-container {
-    border-color: var(--color-light);
+    --color: var(--color-light);
+    --background-color: var(--background-color-light);
+    --primary-color: var(--primary-color-light);
+    --secondary-color: var(--secondary-color-light);
+    --pop-color: var(--pop-color-light);
+    --good-color: var(--good-color-light);
+    --ok-color: var(--ok-color-light);
+    --bad-color: var(--bad-color-light);
   }
 }
