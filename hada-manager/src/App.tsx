@@ -1,15 +1,16 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
-import { Login } from './pages/Login'
 import { Rooms } from './pages/Rooms'
 import { Tables } from './pages/Tables'
+import { Layout } from './layouts/layout'
 
 export function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login/>}/>
-        <Route path="/rooms" element={<Rooms/>}/>
-        <Route path="/tables" element={<Tables/>}/>
+        <Route path="/" element={<Layout/>}>
+          <Route path="/rooms" element={<Rooms/>}/>
+          <Route path="/tables" element={<Tables/>}/>
+        </Route>
       </Routes>
     </Router>
   )
