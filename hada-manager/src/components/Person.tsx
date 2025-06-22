@@ -8,24 +8,24 @@ name:string
 export function Person({name}:Props){
     return(
         <div className="person-container">
-            <div className="relative">
+            <div className="image-container">
                 <MdPerson className="profile-image"/>
                 <button className="delete-button">
                     <MdClose className="centered-icon"/>
                 </button>
             </div>
-            <div>
-                <p className="short">{ShortenText(name,15)}</p>
-                <p>שולחן 2</p>
+            <div className="nowrap">
+                {ShortenText(name,15)}
+                <div className="subtext">שולחן 2</div>
             </div>
-            <span>
+            <div className="flex-container">
                 <button className="enter-button">
-                    <MdOutlineCheck />
+                    <MdOutlineCheck className="centered-icon"/>
                 </button>
                 <button className="depart-button">
-                    <MdClose />
+                    <MdClose className="centered-icon"/>
                 </button>
-            </span>
+            </div>
         </div>
     )
 }
