@@ -1,30 +1,17 @@
 :root {
-  --background-color-dark: #1a1a1a;
-  --background-color-light: #f8f8f8;
-  --color-dark: #e0e0e0;
-  --color-light: #2a2a2a;
-  --primary-color-dark: #2e3a45;
-  --primary-color-light: #8c9ba5;
-  --secondary-color-dark: #3a4753;
-  --secondary-color-light: #5c6f7f;
-  --pop-color-dark: #5fa0b0;
-  --pop-color-light: #2e5c8a;
-  --good-color-dark: #a2e0ae;
-  --good-color-light: #6bcb77;
-  --ok-color-dark: #ebc870;
-  --ok-color-light: #ffc107;
-  --bad-color-dark: #e47f7f;
-  --bad-color-light: #d9534f;
-  --background-color: var(--background-color-dark);
-  --primary-color: var(--primary-color-dark);
-  --secondary-color: var(--secondary-color-dark);
-  --pop-color: var(--pop-color-dark);
-  --color: var(--color-dark);
-  --good-color: var(--good-color-dark);
-  --ok-color: var(--ok-color-dark);
-  --bad-color: var(--bad-color-dark);
-  font-family: system-ui, Helvetica, Arial, sans-serif;
+  --background-color: #1a1a1a;
+  --color: #e0e0e0;
+  --primary-color: #2e3a45;
+  --secondary-color: #3a4753;
+  --pop-color: #5fa0b0;
+  --good-color: #a2e0ae;
+  --ok-color: #ebc870;
+  --bad-color: #e47f7f;
   color-scheme: light dark;
+
+  --image-size: 2rem;
+  --delete-button-size: 1rem;
+  font-family: system-ui, Helvetica, Arial, sans-serif;
   flex: 1;
 }
 
@@ -59,33 +46,38 @@ body {
 
 .person-container {
   display: grid;
-  grid-template-columns: 6rem auto 10rem; 
-  background-color: var(--primary-color); 
+  grid-column-gap: 5px;
+  grid-template-columns: calc(var(--image-size) + var(--delete-button-size)) auto 5rem;
+  margin-block: 1rem;
+  background-color: var(--primary-color);
 }
 
 .delete-button {
   border-radius: 50%;
   border: 1px solid var(--color);
   background-color: var(--bad-color);
-  color:var(--color-dark);
-  width: 2rem;
-  height: 2rem;
+  color: var(--color);
+  width: var(--delete-button-size);;
+  height: var(--delete-button-size);
   position: absolute;
-  right: 0;
-  padding: 0;
+  right: -2px;
+  top:-2px;
 }
 
 .profile-image {
-  width: 4rem;
-  height: 4rem;
+  width: var(--image-size);
+  height: var(--image-size);
   border-radius: 50%;
   border: 4px solid var(--color);
   background-color: var(--pop-color);
   color: var(--color);
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  translate: -50% -50%;
+}
+
+.subtext {
+  font-size: 0.5rem;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .flex-container {
@@ -109,28 +101,41 @@ body {
   text-align: center;
 }
 
-.short{
+.nowrap{
   text-wrap: nowrap;
 }
 
-.relative {
-  position: relative;
-  width: 100%;
-  height: 100%;
+.short {
+  text-wrap: nowrap;
 }
 
-.enter-button{
+.image-container {
+  display: flex;
+  position: relative;
+}
+
+.enter-button,
+.depart-button {
+  position: relative;
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+  left: 0;
+}
+
+.enter-button {
   background-color: var(--good-color);
 }
 
-.depart-button{
+.depart-button {
   background-color: var(--ok-color);
 }
 
-.centered-icon{
-  position:relative;
-  left:0;
-  top:0;
+.centered-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
 }
 
 .good {
@@ -147,13 +152,13 @@ body {
 
 @media (prefers-color-scheme: light) {
   :root {
-    --color: var(--color-light);
-    --background-color: var(--background-color-light);
-    --primary-color: var(--primary-color-light);
-    --secondary-color: var(--secondary-color-light);
-    --pop-color: var(--pop-color-light);
-    --good-color: var(--good-color-light);
-    --ok-color: var(--ok-color-light);
-    --bad-color: var(--bad-color-light);
+    --background-color: #f8f8f8;
+    --color: #2a2a2a;
+    --primary-color: #8c9ba5;
+    --secondary-color: #5c6f7f;
+    --pop-color: #2e5c8a;
+    --good-color: #6bcb77;
+    --ok-color: #ffc107;
+    --bad-color: #d9534f;
   }
 }
