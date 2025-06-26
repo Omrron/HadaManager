@@ -77,6 +77,12 @@ body {
   left: 0;
 }
 
+abbr[title] {
+  border-bottom: none;
+  cursor: inherit;
+  text-decoration: none;
+}
+
 .flex-container {
   display: flex;
   flex-flow: row wrap;

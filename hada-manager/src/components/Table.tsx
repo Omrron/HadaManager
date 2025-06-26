@@ -16,7 +16,7 @@ export function Table({ name, occupancy: current, capacity, reserved=false }: Pr
 
   return (
     <div className="component-container">
-      <h2 className="center">{shortText}</h2>
+      <h2 className="center"><abbr title={`${shortText!=name ? name : ""}`}>{shortText}</abbr></h2>
       <div className="center">
         <span>סועדים </span>
         <span dir="ltr">

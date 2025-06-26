@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { ShortenText } from "../common/textFunctions";
 import { Link } from "react-router-dom";
 
@@ -17,7 +16,7 @@ export function Room({id, name, occupancy, capacity}: Props) {
   return (
     <Link key={id} to={`/tables/${id}`}>
       <button className="component-container">
-        <h2 className="center">{shortText}</h2>
+        <h2 className="center"><abbr title={`${shortText!=name ? name : ""}`}>{shortText}</abbr></h2>
         <div className="center">
           <span>סועדים </span>
           <span dir="ltr">
