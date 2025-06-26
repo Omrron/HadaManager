@@ -1,7 +1,6 @@
-export interface Room
+export interface RoomType
 {
-    assignedPeople : PersonType[],
-    tables : TableType[],
+    id: string
     name : string,
     capacity : number,
     occupancy : number
@@ -9,10 +8,11 @@ export interface Room
 
 export interface TableType
 {
+    id: string,
     name : string,
     capacity : number,
     occupancy : number,
-    reserved: boolean
+    reserved?: boolean
 }
 
 export interface PersonType
