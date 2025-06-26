@@ -1,29 +1,35 @@
 :root {
-  --background-color-dark: #1a1a1a;
-  --background-color-light: #f8f8f8;
-  --color-dark: #e0e0e0;
-  --color-light: #2a2a2a;
-  --primary-color-dark: #2e3a45;
-  --primary-color-light: #8c9ba5;
-  --secondary-color-dark: #3a4753;
-  --secondary-color-light: #5c6f7f;
-  --pop-color-dark: #5fa0b0;
-  --pop-color-light: #2e5c8a;
-  --good-dark: #a2e0ae;
-  --good-light: #6bcb77;
-  --ok-dark: #ebc870;
-  --ok-light: #ffc107;
-  --bad-dark: #e47f7f;
-  --bad-light: #d9534f;
-  font-family: system-ui, Helvetica, Arial, sans-serif;
+  --background-color: #1a1a1a;
+  --color: #e0e0e0;
+  --primary-color: #2e3a45;
+  --secondary-color: #3a4753;
+  --pop-color: #5fa0b0;
+  --good-color: #a2e0ae;
+  --ok-color: #ebc870;
+  --bad-color: #e47f7f;
   color-scheme: light dark;
+
+  --image-size: 2rem;
+  --delete-button-size: 1rem;
+  font-family: system-ui, Helvetica, Arial, sans-serif;
   flex: 1;
+}
+
+button {
+  cursor: pointer;
 }
 
 html,
 body {
   margin: 0;
   padding: 0;
+}
+
+.layout-container {
+  display: grid;
+  background-color: transparent;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
 }
 
 .component-container {
@@ -34,8 +40,44 @@ body {
 }
 
 .room-item-container {
-  background-color: var(--primary-color-dark);
-  border: 2px solid var(--pop-color-dark);
+  background-color: var(--primary-color);
+  border: 2px solid var(--pop-color);
+}
+
+.person-container {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-template-columns: calc(var(--image-size) + var(--delete-button-size)) auto 5rem;
+  margin-block: 1rem;
+  background-color: var(--primary-color);
+}
+
+.delete-button {
+  border-radius: 50%;
+  border: 1px solid var(--color);
+  background-color: var(--bad-color);
+  color: var(--color);
+  width: var(--delete-button-size);;
+  height: var(--delete-button-size);
+  position: absolute;
+  right: -2px;
+  top:-2px;
+}
+
+.profile-image {
+  width: var(--image-size);
+  height: var(--image-size);
+  border-radius: 50%;
+  border: 4px solid var(--color);
+  background-color: var(--pop-color);
+  color: var(--color);
+}
+
+.subtext {
+  font-size: 0.5rem;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .flex-container {
@@ -45,7 +87,7 @@ body {
 
 .progress-container {
   border-radius: 20px;
-  border: 2px solid var(--color-dark);
+  border: 2px solid var(--color);
   overflow: hidden;
   height: 0.5em;
   margin-block: 3px;
@@ -59,42 +101,64 @@ body {
   text-align: center;
 }
 
+.nowrap{
+  text-wrap: nowrap;
+}
+
+.short {
+  text-wrap: nowrap;
+}
+
+.image-container {
+  display: flex;
+  position: relative;
+}
+
+.enter-button,
+.depart-button {
+  position: relative;
+  margin: auto;
+  width: 2rem;
+  height: 2rem;
+  left: 0;
+}
+
+.enter-button {
+  background-color: var(--good-color);
+}
+
+.depart-button {
+  background-color: var(--ok-color);
+}
+
+.centered-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+}
+
 .good {
-  background-color: var(--good-dark);
+  background-color: var(--good-color);
 }
 
 .ok {
-  background-color: var(--ok-dark);
+  background-color: var(--ok-color);
 }
 
 .bad {
-  background-color: var(--bad-dark);
+  background-color: var(--bad-color);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: var(--color-light);
-    background-color: var(--background-color-light);
-  }
-
-  .room-item-container {
-    background-color: var(--primary-color-light);
-    border-color: var(--pop-color-light);
-  }
-
-  .good {
-    background-color: var(--good-light);
-  }
-
-  .ok {
-    background-color: var(--ok-light);
-  }
-
-  .bad {
-    background-color: var(--bad-light);
-  }
-
-  .progress-container {
-    border-color: var(--color-light);
+    --background-color: #f8f8f8;
+    --color: #2a2a2a;
+    --primary-color: #8c9ba5;
+    --secondary-color: #5c6f7f;
+    --pop-color: #2e5c8a;
+    --good-color: #6bcb77;
+    --ok-color: #ffc107;
+    --bad-color: #d9534f;
   }
 }
