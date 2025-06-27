@@ -7,8 +7,8 @@ export function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout/>}>
-          <Route path="/rooms" element={<Rooms/>}/>
+        <Route element={<Layout/>}>
+          <Route path="/" element={<Rooms/>}/>
           <Route path="/tables/:id" element={<Tables/>}/>
         </Route>
       </Routes>
