@@ -1,15 +1,11 @@
 import { ShortenText } from "../common/textFunctions";
 import { Link } from "react-router-dom";
+import type { RoomType } from "../Types";
 
-interface Props {
-  id:string;
-  name: string;
-  occupancy: number;
-  capacity: number;
-}
 
-export function Room({id, name, occupancy, capacity}: Props) {
-  const isFull = occupancy >= capacity;
+export function Room({capacity, id, name, people, tables}:RoomType) {
+  var occupancy = tables.reduce((accumulator, currentValue) => accumulator + currentValue.peopleIds.length, 0);
+  const isFull = people.length >= occupancy;
   const isNearFull = occupancy / capacity >= 0.8;
   const shortText = ShortenText(name, 11);
 

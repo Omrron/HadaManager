@@ -1,16 +1,11 @@
 import { useState } from "react";
 import { ShortenText } from "../common/textFunctions";
+import type { TableType } from "../Types";
 
-interface Props {
-  name: string;
-  occupancy: number;
-  capacity: number;
-  reserved?: boolean;
-}
-
-export function Table({ name, occupancy: current, capacity, reserved=false }: Props) {
-  const isFull = current >= capacity;
-  const isNearFull = current / capacity >= 0.8;
+export function Table({ name, peopleIds, capacity, reserved=false }: TableType) {
+  var occupancy = peopleIds.length;
+  const isFull = occupancy >= capacity;
+  const isNearFull = occupancy / capacity >= 0.8;
   const shortText = ShortenText(name, 11);
   let [isReserved, setReserved] = useState(reserved);
 
@@ -20,14 +15,14 @@ export function Table({ name, occupancy: current, capacity, reserved=false }: Pr
       <div className="center">
         <span>סועדים </span>
         <span dir="ltr">
-          {current} / {capacity}
+          {occupancy} / {capacity}
         </span>
         <div className="progress-container">
           <div
             className={`progress ${
               isFull ? "bad" : isNearFull ? "ok" : "good"
             }`}
-            style={{ width: `${(current / capacity) * 100}%` }}
+            style={{ width: `${(occupancy / capacity) * 100}%` }}
           />
         </div>
       </div>
