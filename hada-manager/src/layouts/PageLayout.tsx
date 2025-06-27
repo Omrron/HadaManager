@@ -7,8 +7,8 @@ export function Layout(){
             <aside className="list-container">
                 <PeopleList/>
             </aside>
-            <div style={{width:"80vw"}}>
-                <div style={{height:"10vh", backgroundColor:"green", display:"flex"}}>
+            <div className="other-side-container">
+                <div className="buttons-container">
 
                 </div>
                 <div className="content-container">

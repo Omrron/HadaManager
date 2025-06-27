@@ -12,7 +12,7 @@ export function Room({ capacity, id, name, people, tables }: RoomType) {
   const shortText = ShortenText(name, 11);
 
   return (
-    <Link key={id} to={`/tables/${id}`}>
+    <Link key={id} to={`/tables/${id}`} className="link-component-container">
       <button className="component-container">
         <h2 className="center">
           <abbr title={`${shortText != name ? name : ""}`}>{shortText}</abbr>
