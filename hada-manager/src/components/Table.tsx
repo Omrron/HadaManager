@@ -10,7 +10,7 @@ export function Table({ name, peopleIds, capacity, reserved=false }: TableType) 
   let [isReserved, setReserved] = useState(reserved);
 
   return (
-    <div className="component-container">
+    <div className="component-container link-component-container">
       <h2 className="center"><abbr title={`${shortText!=name ? name : ""}`}>{shortText}</abbr></h2>
       <div className="center">
         <span>סועדים </span>
