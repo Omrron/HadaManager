@@ -2,10 +2,7 @@ import { MdClose, MdOutlineCheck, MdPerson } from "react-icons/md";
 import { ShortenText } from "../common/textFunctions";
 import { useEffect, useRef, useState } from "react";
 import { miliToMinutes } from "../common/timeFunctions";
-
-interface Props {
-  name: string;
-}
+import type { PersonType } from "../Types";
 
 const changeTimes: number[] = [0.1, 0.1];
 const DEFAULT_DATE = new Date();
@@ -23,14 +20,18 @@ function stateToColor(state: number) {
   }
 }
 
-export function Person({ name }: Props) {
-  const [foodState, setFoodState] = useState(0);
+export function Person({ name, eatingState = 0, tableName, room }: PersonType) {
+  const [foodState, setFoodState] = useState(eatingState);
   const isEating = useRef(false);
   const timeoutId = useRef<number|null>(null);
   const startEatingTime = useRef(DEFAULT_DATE);
 
+  useEffect(() => {
+    if (eatingState > 0) isEating.current = true;
+  },[])
 
   useEffect(() => {
+    eatingState = foodState;
     if (!isEating.current) return;
 
     if (foodState >= 3) {
