@@ -51,8 +51,11 @@ export function PeopleList(){
     return(
         <div>
             <h2 className="center">אנשים</h2>
-            <div style={{position:"relative"}}>
-                <BsSearch style={{visibility:`${isSearching ? "hidden" : "visible"}` ,position:"absolute", left:"12%", top:"18%"}}/>
+            <div>
+
+            </div>
+            <div className="relative">
+                {!isSearching && <BsSearch className="people-search-icon"/>}
                 <input name="peopleSearchBox" className="people-search" type="search" placeholder="חפש אנשים" onFocus={() => SetIsSearching(true)} onBlur={() => SetIsSearching(false)}/>
             </div>
             <div className="create-person">

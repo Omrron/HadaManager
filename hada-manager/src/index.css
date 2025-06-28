@@ -40,7 +40,12 @@ body {
 .list-container{
   width:20%;
   height:100vh;
-  background-color: red;
+  background-color: var(--primary-color);
+}
+
+.people-container{
+  overflow:auto;
+  height: 80vh;
 }
 
 .other-side-container{
@@ -49,7 +54,7 @@ body {
 
 .buttons-container{
   height:10vh;
-  background-color:green;
+  background-color:var(--secondary-color);
   display:"flex";
 }
 
@@ -103,7 +108,7 @@ body {
 }
 
 .subtext {
-  font-size: 0.5rem;
+  font-size: 1rem;
   position: relative;
   top: 0;
   left: 0;
@@ -134,6 +139,10 @@ abbr[title] {
 
 .center {
   text-align: center;
+}
+
+.relative{
+  position: relative;
 }
 
 .nowrap{
@@ -171,6 +180,43 @@ abbr[title] {
   left: 50%;
   top: 50%;
   translate: -50% -50%;
+}
+
+.people-search{
+  width:80%;
+  margin-inline:10%;
+  height:1.5rem;
+  font-size: medium;
+}
+
+.people-search-icon{
+  position: absolute;
+  left: 12%;
+  top: 18%;
+}
+
+.create-person{
+  display: grid;
+  grid-template-columns: 80% 20% ;
+  grid-template-rows: auto;
+  margin-block: 0.5rem;
+  background-color: var(--secondary-color);
+  border: 1px solid var(--pop-color);
+}
+
+.create-person-input{
+ grid-column: 1;
+ margin: 1%;
+ font-size: medium;
+}
+
+.create-person-submit{
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  vertical-align: middle;
+  margin-block: 15%;
+  margin-inline: 5px;
+  cursor: pointer;
 }
 
 .good {
