@@ -3,6 +3,7 @@ import { ShortenText } from "../common/textFunctions";
 import { useEffect, useRef, useState } from "react";
 import { miliToMinutes } from "../common/timeFunctions";
 import type { PersonType } from "../Types";
+import type { HTMLFormMethod } from "react-router-dom";
 
 const changeTimes: number[] = [0.1, 0.1];
 const DEFAULT_DATE = new Date();
@@ -20,7 +21,15 @@ function stateToColor(state: number) {
   }
 }
 
-export function Person({ name, eatingState = 0, tableName, room }: PersonType) {
+
+type Props = {
+  UpdateList(id:string, state:number):void,
+  person: PersonType
+}
+
+
+export function Person({person, UpdateList}: Props) {
+  let {name, eatingState = 0, id, tableName, room} = person;
   const [foodState, setFoodState] = useState(eatingState);
   const isEating = useRef(false);
   const timeoutId = useRef<number|null>(null);
@@ -31,7 +40,7 @@ export function Person({ name, eatingState = 0, tableName, room }: PersonType) {
   },[])
 
   useEffect(() => {
-    eatingState = foodState;
+    UpdateList(id, foodState);
     if (!isEating.current) return;
 
     if (foodState >= 3) {

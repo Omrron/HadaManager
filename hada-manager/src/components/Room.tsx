@@ -1,10 +1,10 @@
 import { ShortenText } from "../common/textFunctions";
 import { Link } from "react-router-dom";
-import type { RoomType } from "../Types";
+import type { RoomType, TableType } from "../Types";
 
-export function Room({ capacity, id, name, people, tables }: RoomType) {
-  var occupancy = tables.reduce(
-    (accumulator, currentValue) => accumulator + currentValue.peopleIds.length,
+export function Room({ capacity, id, name, peopleIds, tables: tableIds }: RoomType) {
+  var occupancy = tableIds.reduce(
+    (accumulator : number, currentValue : TableType) => accumulator + currentValue.peopleIds.length,
     0
   );
   const isFull = occupancy >= capacity;
