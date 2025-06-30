@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ChangeEventHandler } from "react";
 import { useLocation } from "react-router-dom";
 import { Person } from "./Person";
 import type { PersonType } from "../Types";
@@ -11,6 +11,7 @@ import {
 import { BsSearch } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
 import { miliToMinutes } from "../common/timeFunctions";
+import { ConvertHebrewAndEnglish } from "../common/textFunctions";
 
 const changeTimes: number[] = [0.1, 0.1];
 
@@ -18,6 +19,7 @@ export function PeopleList() {
   const [allPeople, SetAllPeople] = useState<PersonType[]>([]);
   const eatingStateTimers: Record<string, number> = {};
   const [people, SetPeople] = useState<PersonType[]>([]);
+  const [searchValue, SetSearchValue] = useState("");
   const location = useLocation();
   const [isSearching, SetIsSearching] = useState(false);
   const [filteredState, SetFilteredState] = useState(0);
@@ -40,14 +42,16 @@ export function PeopleList() {
 
   //filters the list of people shown
   useEffect(() => {
+    let isNumericSearch = Number(searchValue);
+
     if (filteredState == 0) {
-      SetPeople(allPeople);
+      SetPeople(allPeople.filter(_ => isNumericSearch ? _.idNumber.toString().includes(searchValue) : _.name.includes(searchValue) || _.name.includes(ConvertHebrewAndEnglish(searchValue))));
 
       return;
     }
 
-    SetPeople(allPeople.filter((_) => _.eatingState === filteredState));
-  }, [allPeople, filteredState]);
+    SetPeople(allPeople.filter((_) => _.eatingState === filteredState && _.name.includes(searchValue)));
+  }, [allPeople, filteredState, searchValue]);
 
   //updates people eating state
   useEffect(() => {
@@ -68,6 +72,11 @@ export function PeopleList() {
     Object.values(eatingStateTimers).forEach(clearTimeout);
     };
   }, [allPeople]);
+
+  //search person by name or id
+  const SearchPerson = (input:string) => {
+    SetSearchValue(input);
+  }
 
   const addPerson = () => {
     let nameElement = document.getElementById(
@@ -101,7 +110,7 @@ export function PeopleList() {
     // .then(response => response.json())
     // .then(data => console.log(data))
     // .catch(error => console.error('Error:', error)); // Handle errors
-  };
+  }
 
   const removePerson = (id:string) => {
     SetAllPeople(prev => prev.filter(_ => _.id !== id));
@@ -109,11 +118,11 @@ export function PeopleList() {
 
   const startEating = (id: string) => {
     UpdateList(id, 1);
-  };
+  }
 
   const stopEating = (id: string) => {
     UpdateList(id, 0);
-  };
+  }
 
   const UpdateList = (id: string, state: number) => {
     SetAllPeople((prev) =>
@@ -121,11 +130,11 @@ export function PeopleList() {
         person.id === id ? { ...person, eatingState: state } : person
       )
     );
-  };
+  }
 
   const updateFilteredState = (newState: number) => {
-    SetFilteredState((prev) => (prev === newState ? 0 : newState));
-  };
+    SetFilteredState(prev => prev === newState ? 0 : newState);
+  }
 
   return (
     <div>
@@ -137,8 +146,10 @@ export function PeopleList() {
           className="people-search"
           type="search"
           placeholder="חפש אנשים"
+          value={searchValue}
           onFocus={() => SetIsSearching(true)}
           onBlur={() => SetIsSearching(false)}
+          onChange={e => SearchPerson(e.target.value)}
         />
       </div>
       <div className="even-flex">
