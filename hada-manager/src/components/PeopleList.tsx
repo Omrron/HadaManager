@@ -1,4 +1,10 @@
-import { useEffect, useId, useRef, useState, type ChangeEventHandler } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type ChangeEventHandler,
+} from "react";
 import { useLocation } from "react-router-dom";
 import { Person } from "./Person";
 import type { PersonType } from "../Types";
@@ -25,6 +31,7 @@ export function PeopleList() {
   const [filteredState, SetFilteredState] = useState(0);
   const loaded = useRef(false);
 
+  //#region Logic
   useEffect(() => {
     // fetch('https://localhost:7013/People')
     // .then(response => response.json())
@@ -45,12 +52,23 @@ export function PeopleList() {
     let isNumericSearch = Number(searchValue);
 
     if (filteredState == 0) {
-      SetPeople(allPeople.filter(_ => isNumericSearch ? _.idNumber.toString().includes(searchValue) : _.name.includes(searchValue) || _.name.includes(ConvertHebrewAndEnglish(searchValue))));
+      SetPeople(
+        allPeople.filter((_) =>
+          isNumericSearch
+            ? _.idNumber.toString().includes(searchValue)
+            : _.name.includes(searchValue) ||
+              _.name.includes(ConvertHebrewAndEnglish(searchValue))
+        )
+      );
 
       return;
     }
 
-    SetPeople(allPeople.filter((_) => _.eatingState === filteredState && _.name.includes(searchValue)));
+    SetPeople(
+      allPeople.filter(
+        (_) => _.eatingState === filteredState && _.name.includes(searchValue)
+      )
+    );
   }, [allPeople, filteredState, searchValue]);
 
   //updates people eating state
@@ -69,14 +87,14 @@ export function PeopleList() {
     });
 
     return () => {
-    Object.values(eatingStateTimers).forEach(clearTimeout);
+      Object.values(eatingStateTimers).forEach(clearTimeout);
     };
   }, [allPeople]);
 
   //search person by name or id
-  const SearchPerson = (input:string) => {
+  const SearchPerson = (input: string) => {
     SetSearchValue(input);
-  }
+  };
 
   const addPerson = () => {
     let nameElement = document.getElementById(
@@ -110,19 +128,19 @@ export function PeopleList() {
     // .then(response => response.json())
     // .then(data => console.log(data))
     // .catch(error => console.error('Error:', error)); // Handle errors
-  }
+  };
 
-  const removePerson = (id:string) => {
-    SetAllPeople(prev => prev.filter(_ => _.id !== id));
-  }
+  const removePerson = (id: string) => {
+    SetAllPeople((prev) => prev.filter((_) => _.id !== id));
+  };
 
   const startEating = (id: string) => {
     UpdateList(id, 1);
-  }
+  };
 
   const stopEating = (id: string) => {
     UpdateList(id, 0);
-  }
+  };
 
   const UpdateList = (id: string, state: number) => {
     SetAllPeople((prev) =>
@@ -130,75 +148,80 @@ export function PeopleList() {
         person.id === id ? { ...person, eatingState: state } : person
       )
     );
-  }
+  };
 
   const updateFilteredState = (newState: number) => {
-    SetFilteredState(prev => prev === newState ? 0 : newState);
-  }
+    SetFilteredState((prev) => (prev === newState ? 0 : newState));
+  };
+  //#endregion
 
   return (
-    <div>
-      <h2 className="center">אנשים</h2>
-      <div className="relative">
-        {!isSearching && <BsSearch className="people-search-icon" />}
-        <input
-          name="peopleSearchBox"
-          className="people-search"
-          type="search"
-          placeholder="חפש אנשים"
-          value={searchValue}
-          onFocus={() => SetIsSearching(true)}
-          onBlur={() => SetIsSearching(false)}
-          onChange={e => SearchPerson(e.target.value)}
-        />
-      </div>
-      <div className="even-flex">
-        <button
-          className="people-eating-filter-button"
-          onClick={() => updateFilteredState(1)}
-        >
-          <FaHourglassStart />
-        </button>
-        <button
-          className="people-eating-filter-button"
-          onClick={() => updateFilteredState(2)}
-        >
-          <FaHourglassHalf />
-        </button>
-        <button
-          className="people-eating-filter-button"
-          onClick={() => updateFilteredState(3)}
-        >
-          <FaHourglassEnd />
-        </button>
-      </div>
-      <div className="create-person">
-        <input
-          type="text"
-          id="personNameInput"
-          placeholder="שם האדם"
-          className="create-person-input"
-        />
-        <input
-          type="number"
-          id="personIdInput"
-          placeholder="מספר אישי"
-          className="create-person-input"
-        />
-        <button className="create-person-submit" onClick={addPerson}>
-          <FaPlus />
-        </button>
-      </div>
-      <div className="people-container">
-        {people.map((_) => (
-          <Person
-            key={_.id}
-            person={_}
-            StartEating={() => startEating(_.id)}
-            StopEating={() => stopEating(_.id)}
-            Delete={() => removePerson(_.id)}
+    <div className="people-list-divider">
+      <div className="people-list-search-wrapper">
+        <h2 className="center">אנשים</h2>
+        <div className="relative">
+          {!isSearching && <BsSearch className="people-search-icon" />}
+          <input
+            name="peopleSearchBox"
+            className="people-search"
+            type="search"
+            placeholder="חפש אנשים"
+            value={searchValue}
+            onFocus={() => SetIsSearching(true)}
+            onBlur={() => SetIsSearching(false)}
+            onChange={(e) => SearchPerson(e.target.value)}
           />
-        ))}
+        </div>
+        <div className="even-flex">
+          <button
+            className="people-eating-filter-button"
+            onClick={() => updateFilteredState(1)}
+          >
+            <FaHourglassStart />
+          </button>
+          <button
+            className="people-eating-filter-button"
+            onClick={() => updateFilteredState(2)}
+          >
+            <FaHourglassHalf />
+          </button>
+          <button
+            className="people-eating-filter-button"
+            onClick={() => updateFilteredState(3)}
+          >
+            <FaHourglassEnd />
+          </button>
+        </div>
+        <div className="create-person">
+          <input
+            type="text"
+            id="personNameInput"
+            placeholder="שם האדם"
+            className="create-person-input"
+          />
+          <input
+            type="number"
+            id="personIdInput"
+            placeholder="מספר אישי"
+            className="create-person-input"
+          />
+          <button className="create-person-submit" onClick={addPerson}>
+            <FaPlus />
+          </button>
+        </div>
+      </div>
+      <div className="people-list-content-wrapper">
+        <div className="people-container">
+          {people.map((_) => (
+            <Person
+              key={_.id}
+              person={_}
+              StartEating={() => startEating(_.id)}
+              StopEating={() => stopEating(_.id)}
+              Delete={() => removePerson(_.id)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
