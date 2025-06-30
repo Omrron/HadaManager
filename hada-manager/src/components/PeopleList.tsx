@@ -10,13 +10,17 @@ import {
 } from "react-icons/fa";
 import { BsSearch } from "react-icons/bs";
 import { v4 as uuidv4 } from "uuid";
+import { miliToMinutes } from "../common/timeFunctions";
+
+const changeTimes: number[] = [0.1, 0.1];
 
 export function PeopleList() {
   const [allPeople, SetAllPeople] = useState<PersonType[]>([]);
+  const eatingStateTimers: Record<string, number> = {};
   const [people, SetPeople] = useState<PersonType[]>([]);
   const location = useLocation();
   const [isSearching, SetIsSearching] = useState(false);
-  const [filteredState,SetFilteredState] = useState(0);
+  const [filteredState, SetFilteredState] = useState(0);
   const loaded = useRef(false);
 
   useEffect(() => {
@@ -27,25 +31,43 @@ export function PeopleList() {
     // })
     if (loaded.current) return;
 
-    SetAllPeople(prev => [...prev, {idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" }]);
+    SetAllPeople((prev) => [
+      ...prev,
+      { idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" },
+    ]);
     loaded.current = true;
   }, []);
 
+  //filters the list of people shown
   useEffect(() => {
+    if (filteredState == 0) {
+      SetPeople(allPeople);
 
-    if (filteredState == 0)
-    {
-        SetPeople(allPeople)
-
-        return;
+      return;
     }
 
-    console.log(filteredState)
-    console.log(allPeople)
+    SetPeople(allPeople.filter((_) => _.eatingState === filteredState));
+  }, [allPeople, filteredState]);
 
-    SetPeople(allPeople.filter(_ => _.eatingState === filteredState))
+  //updates people eating state
+  useEffect(() => {
+    allPeople.forEach((person) => {
+      if (person.eatingState > 0 && person.eatingState < 3) {
+        const delay = miliToMinutes(changeTimes[person.eatingState - 1]);
+        eatingStateTimers[person.id] = setTimeout(() => {
+          SetAllPeople((prev) =>
+            prev.map((_) =>
+              _.id === person.id ? { ..._, eatingState: _.eatingState + 1 } : _
+            )
+          );
+        }, delay);
+      }
+    });
 
-  },[allPeople, filteredState])
+    return () => {
+    Object.values(eatingStateTimers).forEach(clearTimeout);
+    };
+  }, [allPeople]);
 
   const addPerson = () => {
     let nameElement = document.getElementById(
@@ -68,7 +90,7 @@ export function PeopleList() {
       return;
     }
 
-    SetAllPeople(prev => [...prev, person]);
+    SetAllPeople((prev) => [...prev, person]);
     // let personRequest = {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
@@ -81,15 +103,29 @@ export function PeopleList() {
     // .catch(error => console.error('Error:', error)); // Handle errors
   };
 
-  const UpdateList = (id: string, state: number) => {
-    console.log(state)
-    console.log(id)
-    SetAllPeople(prev => prev.map(person => person.id === id ? {...person, eatingState:state} : person));
+  const removePerson = (id:string) => {
+    SetAllPeople(prev => prev.filter(_ => _.id !== id));
+  }
+
+  const startEating = (id: string) => {
+    UpdateList(id, 1);
   };
 
- const updateFilteredState = (newState:number) => {
-    SetFilteredState(prev => prev === newState ? 0 : newState);
- }
+  const stopEating = (id: string) => {
+    UpdateList(id, 0);
+  };
+
+  const UpdateList = (id: string, state: number) => {
+    SetAllPeople((prev) =>
+      prev.map((person) =>
+        person.id === id ? { ...person, eatingState: state } : person
+      )
+    );
+  };
+
+  const updateFilteredState = (newState: number) => {
+    SetFilteredState((prev) => (prev === newState ? 0 : newState));
+  };
 
   return (
     <div>
@@ -108,19 +144,19 @@ export function PeopleList() {
       <div className="even-flex">
         <button
           className="people-eating-filter-button"
-          onClick={() => (updateFilteredState(1))}
+          onClick={() => updateFilteredState(1)}
         >
           <FaHourglassStart />
         </button>
         <button
           className="people-eating-filter-button"
-          onClick={() => (updateFilteredState(2))}
+          onClick={() => updateFilteredState(2)}
         >
           <FaHourglassHalf />
         </button>
         <button
           className="people-eating-filter-button"
-          onClick={() => (updateFilteredState(3))}
+          onClick={() => updateFilteredState(3)}
         >
           <FaHourglassEnd />
         </button>
@@ -144,8 +180,14 @@ export function PeopleList() {
       </div>
       <div className="people-container">
         {people.map((_) => (
-            <Person key={_.id} person={_} UpdateList={UpdateList} />
-          ))}
+          <Person
+            key={_.id}
+            person={_}
+            StartEating={() => startEating(_.id)}
+            StopEating={() => stopEating(_.id)}
+            Delete={() => removePerson(_.id)}
+          />
+        ))}
       </div>
     </div>
   );

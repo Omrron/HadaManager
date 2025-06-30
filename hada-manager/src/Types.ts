@@ -22,7 +22,6 @@ export interface PersonType
     tableName?: string,
     id : string
     name : string,
-    startEatingTime?:Date,
-    eatingState?: number,
+    eatingState: number,
     idNumber : number,
 }
