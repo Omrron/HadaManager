@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { Room } from "../components/Room"
+import { TopButtons } from "../components/TopButons";
 import type { RoomType } from "../Types"
 
 const roomsList : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצינים שיש לו עכשיו שם ממש אבל ממש אבל מממממששששששש ארוך",
@@ -9,9 +11,15 @@ const roomsList : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצי
                                     peopleIds:[]},];
 
 export function Rooms() {
+
+    const [editMode, SetEditMode] = useState(false);
+
     return (
-        <>
-            {roomsList.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
-        </>
+        <div style={{display:"block"}}>
+            <TopButtons editMode={editMode} SetEditMode={SetEditMode}/>
+            <div className="content-container">
+                {roomsList.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
+            </div>
+        </div>
     )
 }

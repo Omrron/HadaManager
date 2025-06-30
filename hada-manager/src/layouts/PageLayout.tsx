@@ -7,13 +7,8 @@ export function Layout(){
             <aside className="list-container">
                 <PeopleList/>
             </aside>
-            <div className="other-side-container">
-                <div className="buttons-container">
-
-                </div>
-                <div className="content-container">
-                    <Outlet/>
-                </div>
+            <div className="window-container">
+                <Outlet/>
             </div>
         </div>
     )
