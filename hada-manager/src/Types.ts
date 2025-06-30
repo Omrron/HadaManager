@@ -1,7 +1,7 @@
 export interface RoomType
 {
     tables: TableType[],
-    people: PersonType[],
+    peopleIds: number[],
     id: string
     name : string,
     capacity : number
@@ -18,7 +18,10 @@ export interface TableType
 
 export interface PersonType
 {
-    tableId: string | undefined,
+    room?: RoomType,
+    tableName?: string,
+    id : string
     name : string,
-    id : number
+    eatingState: number,
+    idNumber : number,
 }
