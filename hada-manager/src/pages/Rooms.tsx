@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Room } from "../components/Room"
 import { TopButtons } from "../components/TopButons";
-import type { RoomType } from "../Types"
+import type { RoomType, TopLevelProps } from "../Types"
+import { useOutletContext } from "react-router-dom";
 
 const roomsList : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצינים שיש לו עכשיו שם ממש אבל ממש אבל מממממששששששש ארוך",
                                     tables:[],
@@ -11,8 +11,7 @@ const roomsList : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצי
                                     peopleIds:[]},];
 
 export function Rooms() {
-
-    const [editMode, SetEditMode] = useState(false);
+    const {editMode, SetEditMode} = useOutletContext<TopLevelProps>();
 
     return (
         <div style={{display:"block"}}>

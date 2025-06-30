@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { Table } from "../components/Table";
 import { TopButtons } from "../components/TopButons";
-import type { TableType } from "../Types";
+import type { TableType, TopLevelProps } from "../Types";
+import { useOutletContext } from "react-router-dom";
 
 const tables : TableType[] = [
     {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], capacity:10, reserved: false},
@@ -11,8 +11,7 @@ const tables : TableType[] = [
 ];
 
 export function Tables() {
-
-    const [editMode, SetEditMode] = useState(false);
+    const {editMode, SetEditMode} = useOutletContext<TopLevelProps>();
 
     return (
         <>

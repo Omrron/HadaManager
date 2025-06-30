@@ -7,7 +7,7 @@ import {
 } from "react";
 import { useLocation } from "react-router-dom";
 import { Person } from "./Person";
-import type { PersonType } from "../Types";
+import type { PersonType, TopLevelProps } from "../Types";
 import {
   FaHourglassEnd,
   FaHourglassHalf,
@@ -21,7 +21,7 @@ import { ConvertHebrewAndEnglish } from "../common/textFunctions";
 
 const changeTimes: number[] = [0.1, 0.1];
 
-export function PeopleList() {
+export function PeopleList({editMode, SetEditMode}:TopLevelProps) {
   const [allPeople, SetAllPeople] = useState<PersonType[]>([]);
   const eatingStateTimers: Record<string, number> = {};
   const [people, SetPeople] = useState<PersonType[]>([]);
@@ -192,7 +192,7 @@ export function PeopleList() {
             <FaHourglassEnd />
           </button>
         </div>
-        <div className="create-person">
+        {editMode && <div className="create-person">
           <input
             type="text"
             id="personNameInput"
@@ -208,7 +208,7 @@ export function PeopleList() {
           <button className="create-person-submit" onClick={addPerson}>
             <FaPlus />
           </button>
-        </div>
+        </div>}
       </div>
       <div className="people-list-content-wrapper">
         <div className="people-container">
@@ -216,6 +216,7 @@ export function PeopleList() {
             <Person
               key={_.id}
               person={_}
+              editMode={editMode}
               StartEating={() => startEating(_.id)}
               StopEating={() => stopEating(_.id)}
               Delete={() => removePerson(_.id)}

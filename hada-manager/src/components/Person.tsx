@@ -19,11 +19,12 @@ type Props = {
   StartEating(id:string):void,
   StopEating(id:string):void,
   Delete(id:string):void,
+  editMode:boolean,
   person: PersonType
 }
 
 
-export function Person({person, StartEating, StopEating, Delete}: Props) {
+export function Person({person, editMode, StartEating, StopEating, Delete}: Props) {
   let {name, eatingState = 0, id, tableName, room} = person;
 
   return (
@@ -33,9 +34,9 @@ export function Person({person, StartEating, StopEating, Delete}: Props) {
           className="profile-image"
           style={{ borderColor: `var(${stateToColor(eatingState)})` }}
         />
-        <button className="delete-button" onClick={() => Delete(id)}>
+        {editMode && <button className="delete-button" onClick={() => Delete(id)}>
           <MdClose className="centered-icon" />
-        </button>
+        </button>}
       </div>
       <div className="nowrap">
         {ShortenText(name, 15)}

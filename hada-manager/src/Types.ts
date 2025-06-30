@@ -25,3 +25,8 @@ export interface PersonType
     eatingState: number,
     idNumber : number,
 }
+
+export interface TopLevelProps {
+    editMode:boolean;
+    SetEditMode:React.Dispatch<React.SetStateAction<boolean>>;
+}
