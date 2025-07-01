@@ -21,7 +21,7 @@ import { ConvertHebrewAndEnglish } from "../common/textFunctions";
 
 const changeTimes: number[] = [0.1, 0.1];
 
-export function PeopleList({editMode, SetEditMode}:TopLevelProps) {
+export function PeopleList({ editMode }: TopLevelProps) {
   const [allPeople, SetAllPeople] = useState<PersonType[]>([]);
   const eatingStateTimers: Record<string, number> = {};
   const [people, SetPeople] = useState<PersonType[]>([]);
@@ -173,42 +173,50 @@ export function PeopleList({editMode, SetEditMode}:TopLevelProps) {
           />
         </div>
         <div className="even-flex">
-          <button
-            className="people-eating-filter-button"
-            onClick={() => updateFilteredState(1)}
-          >
-            <FaHourglassStart />
-          </button>
-          <button
-            className="people-eating-filter-button"
-            onClick={() => updateFilteredState(2)}
-          >
-            <FaHourglassHalf />
-          </button>
-          <button
-            className="people-eating-filter-button"
-            onClick={() => updateFilteredState(3)}
-          >
-            <FaHourglassEnd />
-          </button>
+          <abbr title="סנן התחילו לאכול">
+            <button
+              className="people-eating-filter-button"
+              onClick={() => updateFilteredState(1)}
+            >
+              <FaHourglassStart />
+            </button>
+          </abbr>
+          <abbr title="סנן לקראת סיום">
+            <button
+              className="people-eating-filter-button"
+              onClick={() => updateFilteredState(2)}
+            >
+              <FaHourglassHalf />
+            </button>
+          </abbr>
+          <abbr title="סנן סיימו לאכול">
+            <button
+              className="people-eating-filter-button"
+              onClick={() => updateFilteredState(3)}
+            >
+              <FaHourglassEnd />
+            </button>
+          </abbr>
         </div>
-        {editMode && <div className="create-person">
-          <input
-            type="text"
-            id="personNameInput"
-            placeholder="שם האדם"
-            className="create-person-input"
-          />
-          <input
-            type="number"
-            id="personIdInput"
-            placeholder="מספר אישי"
-            className="create-person-input"
-          />
-          <button className="create-person-submit" onClick={addPerson}>
-            <FaPlus />
-          </button>
-        </div>}
+        {editMode && (
+          <div className="create-person">
+            <input
+              type="text"
+              id="personNameInput"
+              placeholder="שם האדם"
+              className="create-person-input"
+            />
+            <input
+              type="number"
+              id="personIdInput"
+              placeholder="מספר אישי"
+              className="create-person-input"
+            />
+            <button className="create-person-submit" onClick={addPerson}>
+              <FaPlus />
+            </button>
+          </div>
+        )}
       </div>
       <div className="people-list-content-wrapper">
         <div className="people-container">
