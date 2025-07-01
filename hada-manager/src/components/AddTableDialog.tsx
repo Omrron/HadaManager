@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
-import type { YapperDialogContentProps } from "yapperjs";
 import type { TableType } from "../Types";
+import type { YapperDialogContentProps } from "yapperjs";
 
 export const AddTable: React.FC<YapperDialogContentProps<TableType>> = ({resolve,cancel,}) => {
   const {register,handleSubmit,formState: { errors }} = useForm<TableType>({

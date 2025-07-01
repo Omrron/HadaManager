@@ -20,7 +20,7 @@ export function Rooms() {
     const yapperApi = useYapperDialog();
     
     const handleSubmit = async () => {
-        const newRoom = await yapperApi.showDialog<RoomType,{}>({content:AddRoom});
+        const newRoom = await yapperApi.showDialog({content:AddRoom});
         if(!newRoom)
             return;
         

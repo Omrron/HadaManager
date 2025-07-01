@@ -19,7 +19,7 @@ export function Tables() {
     const yapperApi = useYapperDialog();
         
     const handleSubmit = async () => {
-    const newTable = await yapperApi.showDialog<TableType,{}>({content:AddTable});
+    const newTable = await yapperApi.showDialog({content:AddTable});
         if(!newTable)
             return;
     // do something with the table
