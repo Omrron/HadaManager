@@ -159,7 +159,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
     <div className="people-list-divider">
       <div className="people-list-search-wrapper">
         <h2 className="center">אנשים</h2>
-        <div className="relative">
+        <div id="Title and Serch bar" className="relative">
           {!isSearching && <BsSearch className="people-search-icon" />}
           <input
             name="peopleSearchBox"
@@ -172,7 +172,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
             onChange={(e) => SearchPerson(e.target.value)}
           />
         </div>
-        <div className="even-flex">
+        <div id="Time Filter Buttons" className="even-flex">
           <abbr title="סנן התחילו לאכול">
             <button
               className="people-eating-filter-button"
