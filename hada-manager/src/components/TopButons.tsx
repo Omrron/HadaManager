@@ -1,20 +1,30 @@
-import { MdOutlineEdit, MdOutlineEditOff } from "react-icons/md";
+import { FaPlus } from "react-icons/fa";
+import { MdOutlineCalendarMonth, MdOutlineEdit, MdOutlineEditOff } from "react-icons/md";
+import { ImExit } from "react-icons/im";
 
 interface Props{
     editMode:boolean;
     SetEditMode:React.Dispatch<React.SetStateAction<boolean>>;
+    handleForm:() => Promise<void>;
 }
 
-export function TopButtons({editMode, SetEditMode: setEditMode}:Props){
+export function TopButtons({editMode, SetEditMode, handleForm}:Props){
+
 
     return(
         <div className="buttons-container">
-            <button className="top-button"  onClick={() => setEditMode(prevCount => !prevCount)}>
+            <button className="top-button"  onClick={() => SetEditMode(prevCount => !prevCount)}>
                 {editMode ? <MdOutlineEditOff className="centered-icon top-icon" /> : <MdOutlineEdit className="centered-icon top-icon" />}
             </button>
-            <button className="top-button"/>
-            <button className="top-button"/>
-            <button style={{position:"absolute", left:"0.5rem", top:"25%", background:"red", height:"50%", border:"0" ,width:"20px"}}/>
+            <button className="top-button" onClick={handleForm}>
+                <FaPlus className="centered-icon top-icon"/>
+            </button>
+            <button className="top-button">
+                <MdOutlineCalendarMonth className="centered-icon top-icon"/>
+            </button>
+            <button className="top-button leave-button">
+                <ImExit className="centered-icon top-icon"/>
+            </button>
         </div>
     );
 }

@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Table } from "../components/Table";
 import { TopButtons } from "../components/TopButons";
 import type { TableType, TopLevelProps } from "../Types";
 import { useOutletContext } from "react-router-dom";
+import { useYapperDialog } from "yapperjs";
+import { AddTable } from "../components/AddTableDialog";
 
-const tables : TableType[] = [
+const template : TableType[] = [
     {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], capacity:10, reserved: false},
     {id:"456", name:"שולחן שומרים", peopleIds:[1,2], capacity:2, reserved: false},
     {id:"789", name:"שולחן סדיר", peopleIds:[], capacity:10, reserved: false},
@@ -12,13 +15,24 @@ const tables : TableType[] = [
 
 export function Tables() {
     const {editMode, SetEditMode} = useOutletContext<TopLevelProps>();
+    const [tables, SetTables] = useState<TableType[]>(template);
+    const yapperApi = useYapperDialog();
+        
+    const handleSubmit = async () => {
+    const newTable = await yapperApi.showDialog<TableType,{}>({content:AddTable});
+        if(!newTable)
+            return;
+    // do something with the table
+        await SetTables(prev => [...prev, newTable]);
+    }
 
     return (
         <>
-            <TopButtons editMode={editMode} SetEditMode={SetEditMode}/>
+            <TopButtons editMode={editMode} SetEditMode={SetEditMode} handleForm={handleSubmit} />
             <div className="content-container">
                 {tables.map((table) => <Table key={table.id} id={table.id} name={table.name} peopleIds={table.peopleIds} capacity={table.capacity} reserved={table.reserved}/>)}
             </div>
+            <yapperApi.renderer/>
         </>
     )
 }
