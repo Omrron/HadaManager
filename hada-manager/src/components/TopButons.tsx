@@ -1,6 +1,7 @@
 import { FaPlus } from "react-icons/fa";
 import { MdOutlineCalendarMonth, MdOutlineEdit, MdOutlineEditOff } from "react-icons/md";
 import { ImExit } from "react-icons/im";
+import { Link, useLocation } from "react-router-dom";
 
 interface Props{
     editMode:boolean;
@@ -9,7 +10,8 @@ interface Props{
 }
 
 export function TopButtons({editMode, SetEditMode, handleForm}:Props){
-
+    const location = useLocation();
+    const isInRoom = location.pathname.includes("tables");
 
     return(
         <div className="buttons-container">
@@ -22,9 +24,11 @@ export function TopButtons({editMode, SetEditMode, handleForm}:Props){
             <button className="top-button">
                 <MdOutlineCalendarMonth className="centered-icon top-icon"/>
             </button>
-            <button className="top-button leave-button">
+            {isInRoom && <Link to={"/"}>
+              <button className="top-button leave-button">
                 <ImExit className="centered-icon top-icon"/>
-            </button>
+              </button>
+            </Link>}
         </div>
     );
 }
