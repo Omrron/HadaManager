@@ -103,6 +103,8 @@ body {
   background-color: var(--bad-color);
   position:absolute;
   left:0%;
+  top:50%;
+  translate: 0 -50%;
 }
 
 .link-component-container{
