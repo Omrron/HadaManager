@@ -91,7 +91,7 @@ body {
 }
 
 .leave-button{
-  background-color: red;
+  background-color: var(--bad-color);
   position:absolute;
   left:0%;
 }
@@ -107,6 +107,7 @@ body {
   width: 10.5rem;
   background-color: var(--primary-color);
   border: 2px solid var(--pop-color);
+  border-radius: 20px;
 }
 
 .person-container {
@@ -168,6 +169,12 @@ abbr[title] {
   height: 100%;
 }
 
+.one-liner{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .center {
   text-align: center;
 }
@@ -207,6 +214,8 @@ abbr[title] {
 }
 
 .centered-icon {
+  color:var(--bright-color);
+  border-color: var(--bright-color);
   position: absolute;
   left: 50%;
   top: 50%;
