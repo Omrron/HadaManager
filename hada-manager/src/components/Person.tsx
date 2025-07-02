@@ -25,17 +25,16 @@ type Props = {
   person: PersonType;
 };
 
-function CreateElementClone(element :HTMLDivElement) :HTMLElement
-{     
-    let clone = element.cloneNode(true) as HTMLElement
-    clone.style.position = "absolute";
-    clone.style.top = "-9999px";
-    clone.style.left = "-9999px";
-    clone.style.opacity = "1";
-    clone.style.width = "300px";
-    clone.style.pointerEvents = "none";
+function CreateElementClone(element: HTMLDivElement): HTMLElement {
+  let clone = element.cloneNode(true) as HTMLElement;
+  clone.style.position = "absolute";
+  clone.style.top = "-9999px";
+  clone.style.left = "-9999px";
+  clone.style.opacity = "1";
+  clone.style.width = "300px";
+  clone.style.pointerEvents = "none";
 
-    return clone;
+  return clone;
 }
 
 export function Person({
@@ -73,17 +72,10 @@ export function Person({
   };
 
   const handleDragEnd = (e: React.DragEvent<HTMLDivElement>) => {
-    // Reset the opacity of the original element when the drag ends
     if (itemRef.current) {
       itemRef.current.style.opacity = "1";
     }
   };
-
-  function handleDrop(e: DragEvent<HTMLDivElement>): void {
-     e.preventDefault();
-
-    console.log(e.currentTarget)
-  }
 
   return (
     <div
