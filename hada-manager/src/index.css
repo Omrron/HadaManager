@@ -91,7 +91,7 @@ body {
 }
 
 .people-container{
-  overflow:auto;
+  overflow:none;
   height: 100%;
 }
 
@@ -143,10 +143,12 @@ body {
 
 .person-container {
   display: grid;
+  position:relative;
   grid-column-gap: 5px;
   grid-template-columns: calc(var(--image-size) + var(--delete-button-size)) auto 5rem;
   margin-block: 1rem;
   background-color: var(--primary-color);
+  z-index: 10;
 }
 
 .delete-button {

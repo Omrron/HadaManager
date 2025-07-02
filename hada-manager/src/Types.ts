@@ -29,4 +29,11 @@ export interface PersonType
 export interface TopLevelProps {
     editMode:boolean;
     SetEditMode:React.Dispatch<React.SetStateAction<boolean>>;
+    eatingPeople:Record<string,PersonMD>;
+    SetEatingPeople:React.Dispatch<React.SetStateAction<Record<string,PersonMD>>>;
+}
+
+export interface PersonMD{
+    tableName : string,
+    roomName : string
 }
