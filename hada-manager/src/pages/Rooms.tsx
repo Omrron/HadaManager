@@ -32,12 +32,12 @@ export function Rooms() {
     }
 
     return (
-        <div style={{display:"block"}}>
+        <>
             <TopButtons editMode={editMode} SetEditMode={SetEditMode} handleForm={handleSubmit}/>
             <div className="content-container">
                 {roomsList.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
             </div>
             <yapperApi.renderer/>
-        </div>
+        </>
     )
 }

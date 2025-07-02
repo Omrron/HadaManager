@@ -17,6 +17,18 @@
   display: block;
 }
 
+/* For Webkit browsers (Chrome, Safari, Edge, Opera) */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none; /* Removes the default arrows */
+  margin: 0; /* Removes any default margin */
+}
+
+/* For Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 /* *{
   border:1px solid lime;
 } */
@@ -98,7 +110,7 @@ body {
   margin-inline: 10px;
   border-radius: 20px;
   border:0;
-  background-color: var(--pop-color);
+  background-color: var(--secondary-color);
 }
 
 .top-icon{
@@ -310,14 +322,38 @@ abbr[title] {
   flex-wrap: wrap;
   flex-direction: column;
   background-color: var(--bright-color);
-  border-radius: 20px;
-  padding: 2rem;
+  border-radius: 10%;
+  padding: 1rem;
+  width: 12vw;
+}
+
+.form-input{
+  background-color: var(--bright-color);
+  border: 1px solid #1a1a1a;
+  color: #1a1a1a
+}
+
+.form-input:focus{
+  outline:none;
+  filter: brightness(1.1);
+}
+
+.form-error{
+  height: 1rem;
+  color:red;
+  font-size:small;
+  margin:0.5rem;
+}
+
+.form-input-title{
+  color:#1a1a1a;
+  margin:5px;
 }
 
 .form-button{
-  margin: 1rem;
+  margin-top: 1rem;
   padding: 0.5rem;
-}
+}  
 
 @media (prefers-color-scheme: light) {
   :root {

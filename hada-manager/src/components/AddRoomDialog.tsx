@@ -23,20 +23,18 @@ export const AddRoom: React.FC<YapperDialogContentProps<RoomType>> = ({
       })}
     >
       <div className="form-container">
-        <span style={{color:"black", fontSize:"large", margin:"5px"}}>שם</span>
-        <input type="text" {...register("name", {required:{ value: true, message:"חובה להכניס שם" }})} />
-        {errors.name && (
-          <span style={{color:"black", fontSize:"large", margin:"20px"}}>
+        <span className="form-input-title">שם</span>
+        <input type="text" className="form-input" style={{borderColor:`${errors.name ===  undefined ? "" : "red"}`}} {...register("name", {required:{ value: true, message:"חובה להכניס שם" }})} />
+          <span className="form-error" style={{visibility:`${errors.capacity === null ? "hidden" : "visible"}`}}>
             <ErrorMessage errors={errors} name="name" />
           </span>
-        )}
-        <span style={{color:"black", fontSize:"large", margin:"5px"}} >קיבולת</span>
-        <input type="number" {...register("capacity", {min: {value:1, message:"חובה קיבולת של לפחות אדם אחד" }})} />
-        {errors.capacity && (
-          <div style={{color:"black", fontSize:"large", margin:"20px"}}>
+        <span className="form-input-title" >קיבולת</span>
+        <input type="number" className="form-input" style={{borderColor:`${errors.capacity ===  undefined ? "" : "red"}`}} {...register("capacity", {min: {value:1, message:"חובה קיבולת של לפחות אדם אחד" }})} />
+       
+          <div className="form-error" style={{visibility:`${errors.capacity === null ? "hidden" : "visible"}`}}>
             <ErrorMessage errors={errors} name="capacity"/>
           </div>
-        )}
+        
         <div className="flex-container even-flex">
           <button type="submit" className="form-button good">סיים</button>
           <button type="button" className="form-button bad" onClick={cancel}>

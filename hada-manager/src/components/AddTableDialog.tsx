@@ -15,22 +15,26 @@ export const AddTable: React.FC<YapperDialogContentProps<TableType>> = ({resolve
         resolve(data);
       })}
     >
-      <input type="text" {...register("name", { required: true })} />
-      {errors.name && (
-        <span className="error-message">
-          <ErrorMessage errors={errors} name="name" />
-        </span>
-      )}
-      <input type="number" {...register("capacity", { min: 1 })} />
-      {errors.capacity && (
-        <span className="error-message">
-          <ErrorMessage errors={errors} name="chairCount" />
-        </span>
-      )}
-      <button type="submit">submit</button>
-      <button type="button" onClick={cancel}>
-        cancel
-      </button>
+      <div className="form-container">
+        <span className="form-input-title">שם</span>
+        <input type="text" className="form-input" style={{borderColor:`${errors.name ===  undefined ? "" : "red"}`}} {...register("name", {required:{ value: true, message:"חובה להכניס שם" }})} />
+          <span className="form-error" style={{visibility:`${errors.capacity === null ? "hidden" : "visible"}`}}>
+            <ErrorMessage errors={errors} name="name" />
+          </span>
+        <span className="form-input-title" >קיבולת</span>
+        <input type="number" className="form-input" style={{borderColor:`${errors.capacity ===  undefined ? "" : "red"}`}} {...register("capacity", {min: {value:1, message:"חובה קיבולת של לפחות אדם אחד" }})} />
+       
+          <div className="form-error" style={{visibility:`${errors.capacity === null ? "hidden" : "visible"}`}}>
+            <ErrorMessage errors={errors} name="capacity"/>
+          </div>
+        
+        <div className="flex-container even-flex">
+          <button type="submit" className="form-button good">סיים</button>
+          <button type="button" className="form-button bad" onClick={cancel}>
+            בטל
+          </button>
+        </div>
+      </div>
     </form>
   );
 };
