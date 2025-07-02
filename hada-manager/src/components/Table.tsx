@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { TableType } from "../Types";
+import { useEffect, useState } from "react";
+import type { PersonType, TableType } from "../Types";
 
 export function Table({
   name,
@@ -7,10 +7,32 @@ export function Table({
   capacity,
   reserved = false,
 }: TableType) {
-  var occupancy = peopleIds.length;
+  const [people, setPeople] = useState<PersonType[]>([]);
+  var occupancy = people.length;
   const isFull = occupancy >= capacity;
   const isNearFull = occupancy / capacity >= 0.8;
   let [isReserved, setReserved] = useState(reserved);
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault(); // Allow drop
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData("application/json");
+    if (data) {
+      const person: PersonType = JSON.parse(data);
+      if (people.find(_ => _.idNumber == person.idNumber)) return;
+      setPeople(prev => [...prev,person]);
+    }
+  };
+
+  // useEffect(() => {
+  //   let people = fetch(Config.ApiBaseUrl)
+  //   .then(response => response.json<>())
+    
+  //   setPeople(prev => [...prev,])
+  // },[])
 
   return (
     <div className="component-container outer-component-container" onDragOver={handleDragOver} onDrop={handleDrop}>
