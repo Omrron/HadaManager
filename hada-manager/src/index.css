@@ -27,6 +27,7 @@ input[type="number"]::-webkit-outer-spin-button {
 /* For Firefox */
 input[type="number"] {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 /* *{
@@ -126,7 +127,7 @@ body {
   background-color: var(--bad-color);
 }
 
-.link-component-container{
+.outer-component-container{
   margin-inline:1rem;
   margin-block:0.5rem;
   height: fit-content;

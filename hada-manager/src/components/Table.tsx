@@ -13,7 +13,7 @@ export function Table({
   let [isReserved, setReserved] = useState(reserved);
 
   return (
-    <div className="component-container link-component-container">
+    <div className="component-container outer-component-container" onDragOver={handleDragOver} onDrop={handleDrop}>
       <h2 className="center one-liner">
         <abbr title={name}>{name}</abbr>
       </h2>
