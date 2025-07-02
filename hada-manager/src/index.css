@@ -27,8 +27,14 @@ button {
   -webkit-box-sizing: content-box;
   box-sizing: content-box;
   padding: 0;
+  border: 0;
+  border-radius: 20%;
   font-family: var(--font-family);
   font-size: medium;
+}
+
+button:hover{
+  filter:brightness(1.1);
 }
 
 html,
@@ -79,7 +85,8 @@ body {
 .buttons-container{
   height:10vh;
   display:flex;
-  position: relative;
+  align-items: center;
+  flex-direction: row;
   background-color:var(--secondary-color);
 }
 
@@ -88,9 +95,9 @@ body {
   position:relative;
   width: 6vh;
   height: 6vh;
-  margin-block: auto;
   margin-inline: 10px;
   border-radius: 20px;
+  border:0;
   background-color: var(--pop-color);
 }
 
@@ -99,12 +106,12 @@ body {
   height: 60%;
 }
 
+.leave-button-container{
+  margin-right: auto;
+}
+
 .leave-button{
   background-color: var(--bad-color);
-  position:absolute;
-  left:0%;
-  top:50%;
-  translate: 0 -50%;
 }
 
 .link-component-container{
