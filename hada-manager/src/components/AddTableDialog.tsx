@@ -22,7 +22,7 @@ export const AddTable: React.FC<YapperDialogContentProps<TableType>> = ({resolve
             <ErrorMessage errors={errors} name="name" />
           </span>
         <span className="form-input-title" >קיבולת</span>
-        <input type="number" className="form-input" style={{borderColor:`${errors.capacity ===  undefined ? "" : "red"}`}} {...register("capacity", {min: {value:1, message:"חובה קיבולת של לפחות אדם אחד" }})} />
+        <input type="number" className="form-input" style={{borderColor:`${errors.capacity ===  undefined ? "" : "red"}`}} {...register("capacity", {required:{value: true, message:"חובה קיבולת של לפחות אדם אחד"}, min: {value:1, message:"חובה קיבולת של לפחות אדם אחד" }})} />
        
           <div className="form-error" style={{visibility:`${errors.capacity === null ? "hidden" : "visible"}`}}>
             <ErrorMessage errors={errors} name="capacity"/>
