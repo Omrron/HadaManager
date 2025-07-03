@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Table } from "../components/Table";
 import { TopButtons } from "../components/TopButons";
 import type { TableType, TopLevelProps } from "../Types";
@@ -8,21 +8,22 @@ import { AddTable } from "../components/AddTableDialog";
 
 const template : TableType[] = [
     {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], capacity:10, reserved: false},
-    {id:"456", name:"שולחן שומרים", peopleIds:[1,2], capacity:2, reserved: false},
+    {id:"456", name:"שולחן שומרים", peopleIds:["12","2"], capacity:2, reserved: false},
     {id:"789", name:"שולחן סדיר", peopleIds:[], capacity:10, reserved: false},
     {id:"159", name:"שולחן לאלרגיות מוזרות", peopleIds:[], capacity:100, reserved: false},
 ];
 
 export function Tables() {
-    const {editMode, setEditMode} = useOutletContext<TopLevelProps>();
-    const [tables, SetTables] = useState<TableType[]>(template);
+    const {editMode, setEditMode, tables, setTables} = useOutletContext<TopLevelProps>();
     const yapperApi = useYapperDialog();
         
+    useEffect(() => {setTables(template)},[])
+
     const handleSubmit = async () => {
     const newTable = await yapperApi.showDialog({content:AddTable});
         if(!newTable)
             return;
-        await SetTables(prev => [...prev, newTable]);
+        await setTables(prev => [...prev, newTable]);
     }
 
     return (

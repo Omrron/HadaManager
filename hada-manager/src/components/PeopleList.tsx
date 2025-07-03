@@ -1,8 +1,4 @@
-import {
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useEffect, useRef, useState } from "react";
 import { Person } from "./Person";
 import type { PersonType, TopLevelProps } from "../Types";
 import {
@@ -18,11 +14,19 @@ import { ConvertHebrewAndEnglish } from "../common/textFunctions";
 
 const changeTimes: number[] = [0.1, 0.1];
 
-interface ExtraProps {
-  activeId: string| number | null;
+interface Props {
+  activeId: string | number | null;
+  editMode: boolean;
+  people: PersonType[];
+  setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
 }
 
-export function PeopleList({ editMode, people, setPeople, activeId }: TopLevelProps & ExtraProps) {
+export function PeopleList({
+  editMode,
+  people,
+  setPeople,
+  activeId,
+}: Props) {
   const eatingStateTimers: Record<string, number> = {};
   const [filteredPeople, setFilteredPeople] = useState<PersonType[]>([]);
   const [searchValue, SetSearchValue] = useState("");
@@ -218,17 +222,17 @@ export function PeopleList({ editMode, people, setPeople, activeId }: TopLevelPr
         )}
       </div>
       <div className="people-list-content-wrapper">
-          {filteredPeople.map((_) => (
-            <Person
-              key={_.id}
-              person={_}
-              editMode={editMode}
-              StartEating={() => startEating(_.id)}
-              StopEating={() => stopEating(_.id)}
-              Delete={() => removePerson(_.id)}
-              hidden={activeId === _.id}
-            />
-          ))}
+        {filteredPeople.map((_) => (
+          <Person
+            key={_.id}
+            person={_}
+            editMode={editMode}
+            StartEating={() => startEating(_.id)}
+            StopEating={() => stopEating(_.id)}
+            Delete={() => removePerson(_.id)}
+            hidden={activeId === _.id}
+          />
+        ))}
       </div>
     </div>
   );

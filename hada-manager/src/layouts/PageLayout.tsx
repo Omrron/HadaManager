@@ -1,23 +1,26 @@
 import { Outlet } from "react-router-dom";
 import { PeopleList } from "../components/PeopleList";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
-import type { PersonType } from "../Types";
+import type { PersonType, TableType } from "../Types";
 import { PersonOverlay } from "../components/PersonOverlay";
 
 export function Layout() {
   const [editMode, setEditMode] = useState(false);
   const [people, setPeople] = useState<PersonType[]>([]);
-  const [activeId, setActiveId] = useState<string | number | null>(null);
+  const [tables, setTables] = useState<TableType[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
   const activePerson = people.find((p) => p.id === activeId) ?? null;
 
   const handleDragEnd = (event:DragEndEvent) => {
     setActiveId(null);
     document.body.style.cursor = 'auto';
+    let addedTable = tables.find(_ => _.id === event.over?.id);
+    addedTable?.peopleIds.push(event.active.id.toString())
   };
 
   const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id);
+    setActiveId(event.active.id.toString());
     document.body.style.cursor = 'grabbing';
   };
 
@@ -31,7 +34,6 @@ export function Layout() {
         <aside className="list-container">
           <PeopleList
             editMode={editMode}
-            setEditMode={setEditMode}
             people={people}
             setPeople={setPeople}
             activeId={activeId}
@@ -41,7 +43,7 @@ export function Layout() {
           {activePerson ? <PersonOverlay name={activePerson.name} /> : null}
         </DragOverlay>
         <div className="window-container">
-          <Outlet context={{ editMode, setEditMode, people, setPeople }} />
+          <Outlet context={{ editMode, setEditMode, people, setPeople, tables, setTables }} />
         </div>
       </div>
     </DndContext>

@@ -7,7 +7,7 @@ export interface RoomType {
 }
 
 export interface TableType {
-    peopleIds: number[],
+    peopleIds: string[],
     id: string,
     name: string,
     capacity: number,
@@ -28,4 +28,6 @@ export interface TopLevelProps {
     setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
     people: PersonType[];
     setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
+    tables: TableType[];
+    setTables: React.Dispatch<React.SetStateAction<TableType[]>>;
 }
