@@ -1,39 +1,31 @@
-export interface RoomType
-{
+export interface RoomType {
     tables: TableType[],
     peopleIds: number[],
     id: string
-    name : string,
-    capacity : number
+    name: string,
+    capacity: number
 }
 
-export interface TableType
-{
+export interface TableType {
     peopleIds: number[],
     id: string,
-    name : string,
-    capacity : number,
+    name: string,
+    capacity: number,
     reserved?: boolean
 }
 
-export interface PersonType
-{
+export interface PersonType {
     room?: RoomType,
     tableName?: string,
-    id : string
-    name : string,
+    id: string
+    name: string,
     eatingState: number,
-    idNumber : number,
+    idNumber: number,
 }
 
 export interface TopLevelProps {
-    editMode:boolean;
-    SetEditMode:React.Dispatch<React.SetStateAction<boolean>>;
-    eatingPeople:Record<string,PersonMD>;
-    SetEatingPeople:React.Dispatch<React.SetStateAction<Record<string,PersonMD>>>;
-}
-
-export interface PersonMD{
-    tableName : string,
-    roomName : string
+    editMode: boolean;
+    setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+    people: PersonType[];
+    setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
 }

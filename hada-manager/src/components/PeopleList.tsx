@@ -19,8 +19,11 @@ import { ConvertHebrewAndEnglish } from "../common/textFunctions";
 
 const changeTimes: number[] = [0.1, 0.1];
 
-export function PeopleList({ editMode }: TopLevelProps) {
-  const [allPeople, SetAllPeople] = useState<PersonType[]>([]);
+interface ExtraProps {
+  activeId: string| number | null;
+}
+
+export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatingPeople, activeId }: TopLevelProps & ExtraProps) {
   const eatingStateTimers: Record<string, number> = {};
   const [people, SetPeople] = useState<PersonType[]>([]);
   const [searchValue, SetSearchValue] = useState("");
@@ -38,7 +41,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
     // })
     if (loaded.current) return;
 
-    SetAllPeople((prev) => [
+    SetEatingPeople((prev) => [
       ...prev,
       { idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" },
     ]);
@@ -51,7 +54,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
 
     if (filteredState == 0) {
       SetPeople(
-        allPeople.filter((_) =>
+        eatingPeople.filter((_) =>
           isNumericSearch
             ? _.idNumber.toString().includes(searchValue)
             : _.name.includes(searchValue) ||
@@ -63,19 +66,19 @@ export function PeopleList({ editMode }: TopLevelProps) {
     }
 
     SetPeople(
-      allPeople.filter(
+      eatingPeople.filter(
         (_) => _.eatingState === filteredState && _.name.includes(searchValue)
       )
     );
-  }, [allPeople, filteredState, searchValue]);
+  }, [eatingPeople, filteredState, searchValue]);
 
   //updates people eating state
   useEffect(() => {
-    allPeople.forEach((person) => {
+    eatingPeople.forEach((person) => {
       if (person.eatingState > 0 && person.eatingState < 3) {
         const delay = miliToMinutes(changeTimes[person.eatingState - 1]);
         eatingStateTimers[person.id] = setTimeout(() => {
-          SetAllPeople((prev) =>
+          SetEatingPeople((prev) =>
             prev.map((_) =>
               _.id === person.id ? { ..._, eatingState: _.eatingState + 1 } : _
             )
@@ -87,7 +90,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
     return () => {
       Object.values(eatingStateTimers).forEach(clearTimeout);
     };
-  }, [allPeople]);
+  }, [eatingPeople]);
 
   //search person by name or id
   const SearchPerson = (input: string) => {
@@ -115,7 +118,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
       return;
     }
 
-    SetAllPeople((prev) => [...prev, person]);
+    SetEatingPeople((prev) => [...prev, person]);
     // let personRequest = {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
@@ -129,7 +132,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
   };
 
   const removePerson = (id: string) => {
-    SetAllPeople((prev) => prev.filter((_) => _.id !== id));
+    SetEatingPeople((prev) => prev.filter((_) => _.id !== id));
   };
 
   const startEating = (id: string) => {
@@ -141,7 +144,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
   };
 
   const UpdateList = (id: string, state: number) => {
-    SetAllPeople((prev) =>
+    SetEatingPeople((prev) =>
       prev.map((person) =>
         person.id === id ? { ...person, eatingState: state } : person
       )
@@ -225,6 +228,7 @@ export function PeopleList({ editMode }: TopLevelProps) {
               StartEating={() => startEating(_.id)}
               StopEating={() => stopEating(_.id)}
               Delete={() => removePerson(_.id)}
+              hidden={activeId === _.id}
             />
           ))}
       </div>

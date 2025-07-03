@@ -15,7 +15,7 @@ const template : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצי�
                                     peopleIds:[]},];
 
 export function Rooms() {
-    const {editMode, SetEditMode} = useOutletContext<TopLevelProps>();
+    const {editMode, setEditMode} = useOutletContext<TopLevelProps>();
     const [roomsList, SetRoomsList] = useState<RoomType[]>(template);
     const yapperApi = useYapperDialog();
     
@@ -33,7 +33,7 @@ export function Rooms() {
 
     return (
         <>
-            <TopButtons editMode={editMode} SetEditMode={SetEditMode} handleForm={handleSubmit}/>
+            <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit}/>
             <div className="content-container">
                 {roomsList.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
             </div>

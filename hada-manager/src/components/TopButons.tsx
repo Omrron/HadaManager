@@ -9,11 +9,11 @@ import { Link, useLocation } from "react-router-dom";
 
 interface Props {
   editMode: boolean;
-  SetEditMode: React.Dispatch<React.SetStateAction<boolean>>;
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
   handleForm: () => Promise<void>;
 }
 
-export function TopButtons({ editMode, SetEditMode, handleForm }: Props) {
+export function TopButtons({ editMode, setEditMode, handleForm }: Props) {
   const location = useLocation();
   const isInRoom = location.pathname.includes("tables");
 
@@ -21,7 +21,7 @@ export function TopButtons({ editMode, SetEditMode, handleForm }: Props) {
     <div className="buttons-container">
       <button
         className="top-button"
-        onClick={() => SetEditMode((prevCount) => !prevCount)}
+        onClick={() => setEditMode((prevCount) => !prevCount)}
         title={editMode ? "כבה מצב עריכה" : "הפעל מצב עריכה"}
       >
         {editMode ? (

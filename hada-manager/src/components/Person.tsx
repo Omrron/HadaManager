@@ -24,6 +24,7 @@ type Props = {
   Delete(id: string): void;
   editMode: boolean;
   person: PersonType;
+  hidden:boolean;
 };
 
 export function Person({
@@ -32,6 +33,7 @@ export function Person({
   StartEating,
   StopEating,
   Delete,
+  hidden
 }: Props) {
   let { name, eatingState = 0, id, tableName, room } = person;
   const itemRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ export function Person({
   return (
     <div
       ref={setNodeRef}
-      className="person-container"
+      className={`person-container ${hidden ? 'hidden' : ''}`}
       style={{
         transform: CSS.Translate.toString(transform),
         cursor: "grab",

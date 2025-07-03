@@ -81,7 +81,15 @@ body {
 
 .people-list-content-wrapper{
    flex: 1;
-  overflow-y: auto; 
+   overflow-y: auto; 
+   overflow-x: hidden;
+   position:relative;
+   z-index: 1;
+}
+
+.person-overlay {
+  z-index: 9999;
+  pointer-events: none;
 }
 
 .window-container{
@@ -149,6 +157,10 @@ body {
   margin-block: 1rem;
   background-color: var(--primary-color);
   z-index: 10;
+}
+
+.person-container.hidden {
+  visibility: hidden;
 }
 
 .delete-button {

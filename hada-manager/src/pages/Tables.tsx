@@ -14,7 +14,7 @@ const template : TableType[] = [
 ];
 
 export function Tables() {
-    const {editMode, SetEditMode} = useOutletContext<TopLevelProps>();
+    const {editMode, setEditMode} = useOutletContext<TopLevelProps>();
     const [tables, SetTables] = useState<TableType[]>(template);
     const yapperApi = useYapperDialog();
         
@@ -22,13 +22,12 @@ export function Tables() {
     const newTable = await yapperApi.showDialog({content:AddTable});
         if(!newTable)
             return;
-    // do something with the table
         await SetTables(prev => [...prev, newTable]);
     }
 
     return (
         <>
-            <TopButtons editMode={editMode} SetEditMode={SetEditMode} handleForm={handleSubmit} />
+            <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit} />
             <div className="content-container">
                 {tables.map((table) => <Table key={table.id} id={table.id} name={table.name} peopleIds={table.peopleIds} capacity={table.capacity} reserved={table.reserved}/>)}
             </div>
