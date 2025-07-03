@@ -3,7 +3,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { useLocation } from "react-router-dom";
 import { Person } from "./Person";
 import type { PersonType, TopLevelProps } from "../Types";
 import {
@@ -23,11 +22,10 @@ interface ExtraProps {
   activeId: string| number | null;
 }
 
-export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatingPeople, activeId }: TopLevelProps & ExtraProps) {
+export function PeopleList({ editMode, people, setPeople, activeId }: TopLevelProps & ExtraProps) {
   const eatingStateTimers: Record<string, number> = {};
-  const [people, SetPeople] = useState<PersonType[]>([]);
+  const [filteredPeople, setFilteredPeople] = useState<PersonType[]>([]);
   const [searchValue, SetSearchValue] = useState("");
-  const location = useLocation();
   const [isSearching, SetIsSearching] = useState(false);
   const [filteredState, SetFilteredState] = useState(0);
   const loaded = useRef(false);
@@ -41,7 +39,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
     // })
     if (loaded.current) return;
 
-    SetEatingPeople((prev) => [
+    setPeople((prev) => [
       ...prev,
       { idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" },
     ]);
@@ -53,8 +51,8 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
     let isNumericSearch = Number(searchValue);
 
     if (filteredState == 0) {
-      SetPeople(
-        eatingPeople.filter((_) =>
+      setFilteredPeople(
+        people.filter((_) =>
           isNumericSearch
             ? _.idNumber.toString().includes(searchValue)
             : _.name.includes(searchValue) ||
@@ -65,20 +63,20 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
       return;
     }
 
-    SetPeople(
-      eatingPeople.filter(
+    setFilteredPeople(
+      people.filter(
         (_) => _.eatingState === filteredState && _.name.includes(searchValue)
       )
     );
-  }, [eatingPeople, filteredState, searchValue]);
+  }, [people, filteredState, searchValue]);
 
   //updates people eating state
   useEffect(() => {
-    eatingPeople.forEach((person) => {
+    people.forEach((person) => {
       if (person.eatingState > 0 && person.eatingState < 3) {
         const delay = miliToMinutes(changeTimes[person.eatingState - 1]);
         eatingStateTimers[person.id] = setTimeout(() => {
-          SetEatingPeople((prev) =>
+          setPeople((prev) =>
             prev.map((_) =>
               _.id === person.id ? { ..._, eatingState: _.eatingState + 1 } : _
             )
@@ -90,7 +88,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
     return () => {
       Object.values(eatingStateTimers).forEach(clearTimeout);
     };
-  }, [eatingPeople]);
+  }, [people]);
 
   //search person by name or id
   const SearchPerson = (input: string) => {
@@ -118,7 +116,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
       return;
     }
 
-    SetEatingPeople((prev) => [...prev, person]);
+    setPeople((prev) => [...prev, person]);
     // let personRequest = {
     //     method: 'POST',
     //     headers: { 'Content-Type': 'application/json' },
@@ -132,7 +130,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
   };
 
   const removePerson = (id: string) => {
-    SetEatingPeople((prev) => prev.filter((_) => _.id !== id));
+    setPeople((prev) => prev.filter((_) => _.id !== id));
   };
 
   const startEating = (id: string) => {
@@ -144,7 +142,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
   };
 
   const UpdateList = (id: string, state: number) => {
-    SetEatingPeople((prev) =>
+    setPeople((prev) =>
       prev.map((person) =>
         person.id === id ? { ...person, eatingState: state } : person
       )
@@ -220,7 +218,7 @@ export function PeopleList({ editMode, people: eatingPeople, setPeople: SetEatin
         )}
       </div>
       <div className="people-list-content-wrapper">
-          {people.map((_) => (
+          {filteredPeople.map((_) => (
             <Person
               key={_.id}
               person={_}

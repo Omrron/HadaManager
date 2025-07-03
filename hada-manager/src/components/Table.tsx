@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import type { PersonType, TableType } from "../Types";
+import { useState } from "react";
+import type { TableType } from "../Types";
 import { useDroppable } from "@dnd-kit/core";
 
 export function Table({
@@ -9,13 +9,12 @@ export function Table({
   capacity,
   reserved = false,
 }: TableType) {
-  const { isOver, setNodeRef } = useDroppable({ id });
-  const [people, setPeople] = useState<PersonType[]>([]);
-  var occupancy = people.length;
+  const { setNodeRef } = useDroppable({ id });
+  var occupancy = peopleIds.length;
   const isFull = occupancy >= capacity;
   const isNearFull = occupancy / capacity >= 0.8;
   let [isReserved, setReserved] = useState(reserved);
-  
+
   return (
     <div
       className="component-container outer-component-container"
