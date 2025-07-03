@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { PeopleList } from "../components/PeopleList";
 import { useState } from "react";
-import { DndContext, DragOverlay, type DragStartEvent } from "@dnd-kit/core";
+import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
 import type { PersonType } from "../Types";
 import { PersonOverlay } from "../components/PersonOverlay";
 
@@ -11,12 +11,14 @@ export function Layout() {
   const [activeId, setActiveId] = useState<string | number | null>(null);
   const activePerson = people.find((p) => p.id === activeId) ?? null;
 
-  const handleDragEnd = () => {
+  const handleDragEnd = (event:DragEndEvent) => {
     setActiveId(null);
+    document.body.style.cursor = 'auto';
   };
 
   const handleDragStart = (event: DragStartEvent) => {
     setActiveId(event.active.id);
+    document.body.style.cursor = 'grabbing';
   };
 
 

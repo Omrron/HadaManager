@@ -9,7 +9,7 @@ export function Table({
   capacity,
   reserved = false,
 }: TableType) {
-  const { setNodeRef } = useDroppable({ id });
+  const { setNodeRef, isOver } = useDroppable({ id });
   var occupancy = peopleIds.length;
   const isFull = occupancy >= capacity;
   const isNearFull = occupancy / capacity >= 0.8;
@@ -19,6 +19,7 @@ export function Table({
     <div
       className="component-container outer-component-container"
       ref={setNodeRef}
+      style={isOver ? {outline:"1px solid var(--pop-color)", filter:"brightness(1.1)"} : {}}
     >
       <h2 className="center one-liner">
         <abbr title={name}>{name}</abbr>
