@@ -217,7 +217,6 @@ export function PeopleList({ editMode }: TopLevelProps) {
         )}
       </div>
       <div className="people-list-content-wrapper">
-        <div className="people-container">
           {people.map((_) => (
             <Person
               key={_.id}
@@ -228,7 +227,6 @@ export function PeopleList({ editMode }: TopLevelProps) {
               Delete={() => removePerson(_.id)}
             />
           ))}
-        </div>
       </div>
     </div>
   );

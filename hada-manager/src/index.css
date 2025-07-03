@@ -69,16 +69,19 @@ body {
 }
 
 .people-list-divider{
-  display: grid;
-  grid-template-rows: auto 1fr;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
 }
 
 .people-list-search-wrapper{
-  grid-row: 1;
+  flex-shrink: 0;
 }
 
 .people-list-content-wrapper{
-  grid-row:2;
+   flex: 1;
+  overflow-y: auto; 
 }
 
 .window-container{
@@ -88,11 +91,6 @@ body {
 
 .content-container{
   display: flex;
-}
-
-.people-container{
-  overflow:none;
-  height: 100%;
 }
 
 .buttons-container{
@@ -146,6 +144,8 @@ body {
   position:relative;
   grid-column-gap: 5px;
   grid-template-columns: calc(var(--image-size) + var(--delete-button-size)) auto 5rem;
+  border-radius: 10px;
+  padding: 0.5rem;
   margin-block: 1rem;
   background-color: var(--primary-color);
   z-index: 10;
