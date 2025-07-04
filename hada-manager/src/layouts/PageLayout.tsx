@@ -31,6 +31,8 @@ export function Layout() {
 	};
 			
 	const SeatPerson = (person:PersonType, table:TableType) => {
+		if(table.reserved) return;
+
 		let otherContainingTable = tables.find(_ => _.id !== table.id && _.peopleIds.includes(person.id))
 		
 		if(otherContainingTable)

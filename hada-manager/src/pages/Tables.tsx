@@ -28,11 +28,16 @@ export function Tables() {
         await setTables(prev => [...prev, newTable]);
     }
 
+      const setReserved = (id:string, newState:boolean) => {
+        tables.filter(_ => _.id === id)
+        setTables(prev => prev.map(_ => _.id === id ? {..._, reserved:newState} : _));
+      }
+
     return (
         <>
             <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit} />
             <div className="content-container">
-                {tables.map((table) => <Table key={table.id} id={table.id} name={table.name} peopleIds={table.peopleIds} capacity={table.capacity} reserved={table.reserved}/>)}
+                {tables.map((table) => <Table key={table.id} table={table} setReserved={setReserved}/>)}
             </div>
             <yapperApi.renderer/>
         </>
