@@ -38,7 +38,7 @@ export function TopButtons({ editMode, setEditMode, handleForm }: Props) {
       </button>
       {isInRoom && (
         <Link to={"/"} className="leave-button-container">
-          <button className="top-button leave-button">
+          <button className="top-button leave-button" title="יציאה מהחדר">
             <ImExit className="centered-icon top-icon" />
           </button>
         </Link>
