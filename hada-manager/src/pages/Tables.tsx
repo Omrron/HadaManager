@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Table } from "../components/Table";
 import { TopButtons } from "../components/TopButons";
 import type { TableType, TopLevelProps } from "../Types";
 import { useOutletContext } from "react-router-dom";
 import { useYapperDialog } from "yapperjs";
 import { AddTable } from "../components/AddTableDialog";
+import { v4 as uuidv4 } from "uuid";
 
 const template : TableType[] = [
     {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], capacity:10, reserved: false},
@@ -21,8 +22,9 @@ export function Tables() {
 
     const handleSubmit = async () => {
     const newTable = await yapperApi.showDialog({content:AddTable});
-        if(!newTable)
-            return;
+        if(!newTable) return;
+        newTable.id = uuidv4();
+        newTable.peopleIds=[];
         await setTables(prev => [...prev, newTable]);
     }
 

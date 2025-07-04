@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Room } from "../components/Room"
 import { TopButtons } from "../components/TopButons";
 import type { RoomType, TopLevelProps } from "../Types"
@@ -10,15 +10,18 @@ import { v4 as uuidv4 } from "uuid";
 const template : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצינים שיש לו עכשיו שם ממש אבל ממש אבל מממממששששששש ארוך",
                                     tables:[],
                                     peopleIds:[]},
-                                {id:"123789", capacity:8, name:"חד\"א חפשים",
+                                {id:"123789", capacity:5, name:"חד\"א חפשים",
                                     tables:[],
                                     peopleIds:[]},];
 
 export function Rooms() {
-    const {editMode, setEditMode} = useOutletContext<TopLevelProps>();
-    const [roomsList, SetRoomsList] = useState<RoomType[]>(template);
+    const {editMode, setEditMode, rooms, setRooms} = useOutletContext<TopLevelProps>();
     const yapperApi = useYapperDialog();
     
+    useEffect(() => {
+        setRooms(template);
+    },[]);
+
     const handleSubmit = async () => {
         const newRoom = await yapperApi.showDialog({content:AddRoom});
         if(!newRoom)
@@ -28,14 +31,14 @@ export function Rooms() {
         newRoom.peopleIds = [];
         newRoom.tables=[];
         
-        await SetRoomsList(prev => [...prev,newRoom]);
+        await setRooms(prev => [...prev,newRoom]);
     }
 
     return (
         <>
             <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit}/>
             <div className="content-container">
-                {roomsList.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
+                {rooms.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
             </div>
             <yapperApi.renderer/>
         </>

@@ -36,7 +36,6 @@ export function Person({
   hidden
 }: Props) {
   let { name, eatingState = 0, id, tableName, room } = person;
-  const itemRef = useRef<HTMLDivElement>(null);
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform } =
     useDraggable({ id: person.id });
 
@@ -63,22 +62,17 @@ export function Person({
         )}
       </div>
       <div
-        className="nowrap"
+        className="person-text-container one-liner"
         ref={setActivatorNodeRef}
         {...listeners}
         {...attributes}
       >
-        {ShortenText(name, 15)}
-        <div className="subtext">שולחן 2</div>
+        {name}
+        <div className="subtext one-liner">{tableName}{room?.name}</div>
       </div>
-      <div className="flex-container">
-        <button className="enter-button" onClick={() => StartEating(id)}>
-          <MdOutlineCheck className="centered-icon" />
-        </button>
         <button className="depart-button" onClick={() => StopEating(id)}>
           <MdClose className="centered-icon" />
         </button>
-      </div>
     </div>
   );
 }

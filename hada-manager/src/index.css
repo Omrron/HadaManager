@@ -65,6 +65,7 @@ body {
 .list-container{
   width:20%;
   height:100vh;
+  flex-shrink: 0;
   background-color: var(--primary-color);
 }
 
@@ -148,13 +149,13 @@ body {
 }
 
 .person-container {
-  display: grid;
   position:relative;
-  grid-column-gap: 5px;
-  grid-template-columns: calc(var(--image-size) + var(--delete-button-size)) auto 5rem;
+  display: flex;
+  width: 20vw;
+  flex-shrink: 0;
+  box-sizing: border-box;
   border-radius: 10px;
-  padding: 0.5rem;
-  margin-block: 1rem;
+  padding-block: 1rem;
   background-color: var(--primary-color);
   z-index: 10;
 }
@@ -199,7 +200,6 @@ abbr[title] {
 
 .flex-container {
   display: flex;
-  flex-flow: row wrap;
 }
 
 .progress-container {
@@ -228,8 +228,10 @@ abbr[title] {
   position: relative;
 }
 
-.nowrap{
-  text-wrap: nowrap;
+.person-text-container{
+  margin-inline:0.5em;
+  flex:1 0 0;
+  min-width: 0;
 }
 
 .short {
@@ -241,20 +243,10 @@ abbr[title] {
   position: relative;
 }
 
-.enter-button,
 .depart-button {
   position: relative;
-  margin: auto;
   width: 2rem;
   height: 2rem;
-  left: 0;
-}
-
-.enter-button {
-  background-color: var(--good-color);
-}
-
-.depart-button {
   background-color: var(--ok-color);
 }
 

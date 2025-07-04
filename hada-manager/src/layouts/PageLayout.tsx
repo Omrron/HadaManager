@@ -1,29 +1,47 @@
 import { Outlet } from "react-router-dom";
 import { PeopleList } from "../components/PeopleList";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
-import type { PersonType, TableType } from "../Types";
+import type { PersonType, RoomType, TableType } from "../Types";
 import { PersonOverlay } from "../components/PersonOverlay";
 
 export function Layout() {
-  const [editMode, setEditMode] = useState(false);
-  const [people, setPeople] = useState<PersonType[]>([]);
-  const [tables, setTables] = useState<TableType[]>([]);
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const activePerson = people.find((p) => p.id === activeId) ?? null;
+	const [editMode, setEditMode] = useState(false);
+	const [people, setPeople] = useState<PersonType[]>([]);
+	const [tables, setTables] = useState<TableType[]>([]);
+	const [rooms, setRooms] = useState<RoomType[]>([]);
+	const [activeId, setActiveId] = useState<string | null>(null);
+	const activePerson = people.find((p) => p.id === activeId) ?? null;
+    
+	const handleDragEnd = (event:DragEndEvent) => {
+		setActiveId(null);
+		document.body.style.cursor = 'auto';
+		let addedTable = tables.find(_ => _.id === event.over?.id);
+		let addedPerson = people.find(_ => _.id === event.active.id);
+		
+		if(addedTable && addedPerson)
+		{
+			SeatPerson(addedPerson, addedTable);
+		}
+	};
+			
+	const handleDragStart = (event: DragStartEvent) => {
+		setActiveId(event.active.id.toString());
+		document.body.style.cursor = 'grabbing';
+	};
+			
+	const SeatPerson = (person:PersonType, table:TableType) => {
+		let otherContainingTable = tables.find(_ => _.id !== table.id && _.peopleIds.includes(person.id))
+		
+		if(otherContainingTable)
+			otherContainingTable.peopleIds = otherContainingTable.peopleIds.filter(_ => _ !== person.id);
 
-  const handleDragEnd = (event:DragEndEvent) => {
-    setActiveId(null);
-    document.body.style.cursor = 'auto';
-    let addedTable = tables.find(_ => _.id === event.over?.id);
-    addedTable?.peopleIds.push(event.active.id.toString())
-  };
-
-  const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id.toString());
-    document.body.style.cursor = 'grabbing';
-  };
-
+		if(!table.peopleIds.includes(person.id))
+		{
+			table.peopleIds.push(person.id);
+			person.tableName = table.name;
+		}
+	}
 
   return (
     <DndContext
@@ -40,10 +58,10 @@ export function Layout() {
           />
         </aside>
         <DragOverlay dropAnimation={null}>
-          {activePerson ? <PersonOverlay name={activePerson.name} /> : null}
+          {activePerson ? <PersonOverlay name={activePerson.name} tableName={activePerson.tableName}/> : null}
         </DragOverlay>
         <div className="window-container">
-          <Outlet context={{ editMode, setEditMode, people, setPeople, tables, setTables }} />
+          <Outlet context={{ editMode, setEditMode, people, setPeople, tables, setTables, rooms, setRooms }} />
         </div>
       </div>
     </DndContext>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Person } from "./Person";
-import type { PersonType, TopLevelProps } from "../Types";
+import type { PersonType } from "../Types";
 import {
   FaHourglassEnd,
   FaHourglassHalf,

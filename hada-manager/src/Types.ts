@@ -30,4 +30,6 @@ export interface TopLevelProps {
     setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
     tables: TableType[];
     setTables: React.Dispatch<React.SetStateAction<TableType[]>>;
+    rooms: RoomType[];
+    setRooms: React.Dispatch<React.SetStateAction<RoomType[]>>;
 }
