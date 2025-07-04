@@ -40,8 +40,17 @@ export function Layout() {
 		{
 			table.peopleIds.push(person.id);
 			person.tableName = table.name;
+			UpdateList(person.id, 1);
 		}
 	}
+
+	const UpdateList = (id: string, state: number) => {
+		setPeople((prev) =>
+			prev.map((person) =>
+				person.id === id ? { ...person, eatingState: state } : person
+			)
+		);
+	};
 
   return (
     <DndContext
@@ -55,6 +64,8 @@ export function Layout() {
             people={people}
             setPeople={setPeople}
             activeId={activeId}
+						tables={tables}
+						UpdateList={UpdateList}
           />
         </aside>
         <DragOverlay dropAnimation={null}>

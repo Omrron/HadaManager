@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Person } from "./Person";
-import type { PersonType } from "../Types";
+import type { PersonType, TableType } from "../Types";
 import {
   FaHourglassEnd,
   FaHourglassHalf,
@@ -19,6 +19,8 @@ interface Props {
   editMode: boolean;
   people: PersonType[];
   setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
+  tables: TableType[];
+  UpdateList(id:string, state:number):void
 }
 
 export function PeopleList({
@@ -26,6 +28,8 @@ export function PeopleList({
   people,
   setPeople,
   activeId,
+  tables,
+  UpdateList
 }: Props) {
   const eatingStateTimers: Record<string, number> = {};
   const [filteredPeople, setFilteredPeople] = useState<PersonType[]>([]);
@@ -133,7 +137,22 @@ export function PeopleList({
     // .catch(error => console.error('Error:', error)); // Handle errors
   };
 
+  const unseatPerson = (id:string) => {
+    let table = tables.find(_ => _.peopleIds.includes(id));
+    let person = people.find(_ => _.id === id);
+
+    if(table)
+    {
+      table.peopleIds = table.peopleIds.filter(_ => _ !== id);
+    }
+    if(person)
+    {
+      person.tableName = "";
+    }
+  }
+
   const removePerson = (id: string) => {
+    unseatPerson(id);
     setPeople((prev) => prev.filter((_) => _.id !== id));
   };
 
@@ -142,15 +161,8 @@ export function PeopleList({
   };
 
   const stopEating = (id: string) => {
+    unseatPerson(id);
     UpdateList(id, 0);
-  };
-
-  const UpdateList = (id: string, state: number) => {
-    setPeople((prev) =>
-      prev.map((person) =>
-        person.id === id ? { ...person, eatingState: state } : person
-      )
-    );
   };
 
   const updateFilteredState = (newState: number) => {
