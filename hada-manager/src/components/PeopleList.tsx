@@ -186,7 +186,7 @@ export function PeopleList({
         <div id="Time Filter Buttons" className="even-flex">
           <abbr title="סנן התחילו לאכול">
             <button
-              className="people-eating-filter-button"
+              className={`people-eating-filter-button ${filteredState==1 ? "selected-people-filter-button" : ""}`}
               onClick={() => updateFilteredState(1)}
             >
               <FaHourglassStart />
@@ -194,7 +194,7 @@ export function PeopleList({
           </abbr>
           <abbr title="סנן לקראת סיום">
             <button
-              className="people-eating-filter-button"
+              className={`people-eating-filter-button ${filteredState==2 ? "selected-people-filter-button" : ""}`}
               onClick={() => updateFilteredState(2)}
             >
               <FaHourglassHalf />
@@ -202,7 +202,7 @@ export function PeopleList({
           </abbr>
           <abbr title="סנן סיימו לאכול">
             <button
-              className="people-eating-filter-button"
+              className={`people-eating-filter-button ${filteredState==3 ? "selected-people-filter-button" : ""}`}
               onClick={() => updateFilteredState(3)}
             >
               <FaHourglassEnd />
