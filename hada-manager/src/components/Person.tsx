@@ -1,7 +1,5 @@
-import { MdClose, MdOutlineCheck, MdPerson } from "react-icons/md";
-import { ShortenText } from "../common/textFunctions";
+import { MdClose, MdPerson } from "react-icons/md";
 import type { PersonType } from "../Types";
-import { useRef, type DragEvent } from "react";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 
