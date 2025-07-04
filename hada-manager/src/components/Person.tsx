@@ -19,7 +19,6 @@ function stateToColor(state: number) {
 }
 
 type Props = {
-  StartEating(id: string): void;
   StopEating(id: string): void;
   Delete(id: string): void;
   editMode: boolean;
@@ -30,7 +29,6 @@ type Props = {
 export function Person({
   person,
   editMode,
-  StartEating,
   StopEating,
   Delete,
   hidden

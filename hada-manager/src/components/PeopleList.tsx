@@ -156,10 +156,6 @@ export function PeopleList({
     setPeople((prev) => prev.filter((_) => _.id !== id));
   };
 
-  const startEating = (id: string) => {
-    UpdateList(id, 1);
-  };
-
   const stopEating = (id: string) => {
     unseatPerson(id);
     UpdateList(id, 0);
@@ -239,7 +235,6 @@ export function PeopleList({
             key={_.id}
             person={_}
             editMode={editMode}
-            StartEating={() => startEating(_.id)}
             StopEating={() => stopEating(_.id)}
             Delete={() => removePerson(_.id)}
             hidden={activeId === _.id}

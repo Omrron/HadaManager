@@ -40,7 +40,7 @@ export function Layout() {
 		{
 			table.peopleIds.push(person.id);
 			person.tableName = table.name;
-			UpdateList(person.id, 1);
+			if(person.eatingState === 0) UpdateList(person.id, 1);
 		}
 	}
 
