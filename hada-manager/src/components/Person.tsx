@@ -64,7 +64,12 @@ export function Person({
         {...attributes}
       >
         {name}
-        <div className="subtext one-liner">{tableName} {roomName}</div>
+        {tableName &&
+        <div className="person-location-container">
+          <div className="subtext half-size one-liner" title={tableName}>{tableName}</div>
+          <div className="text-divider">|</div>
+          <div className="subtext half-size one-liner" title={roomName}>{roomName}</div>
+        </div>}
       </div>
         <button className="depart-button" onClick={() => StopEating(id)}>
           <MdClose className="centered-icon" />

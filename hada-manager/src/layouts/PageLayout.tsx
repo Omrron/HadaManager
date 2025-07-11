@@ -19,7 +19,7 @@ export function Layout() {
 
     setTables([
       {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], roomId:"123456", capacity:10, reserved: false},
-      {id:"456", name:"שולחן שומרים", peopleIds:["12","2"], roomId:"123456", capacity:2, reserved: false},
+      {id:"456", name:"שולחן שומרים", peopleIds:[], roomId:"123456", capacity:2, reserved: false},
       {id:"789", name:"שולחן סדיר", peopleIds:[], roomId:"123789", capacity:10, reserved: false},
       {id:"159", name:"שולחן לאלרגיות מוזרות", peopleIds:[], roomId:"123789", capacity:100, reserved: false},
     ]);
@@ -57,7 +57,7 @@ export function Layout() {
 		if(!table.peopleIds.includes(person.id))
 		{
       setTables(prev => prev.map(_ => _.id === table.id ? {..._, peopleIds:[..._.peopleIds, person.id]} : _));
-      setPeople(prev => prev.map(_ => _.id === person.id ? {..._, tableName:table.name, roomName:"pop"} : _));
+      setPeople(prev => prev.map(_ => _.id === person.id ? {..._, tableName:table.name, roomName:rooms.find(_ => _.id === table.roomId)?.name} : _));
 			if(person.eatingState === 0) UpdateList(person.id, 1);
 		}
 	}
@@ -88,7 +88,7 @@ export function Layout() {
           />
         </aside>
         <DragOverlay dropAnimation={null}>
-          {activePerson ? <PersonOverlay name={activePerson.name} tableName={activePerson.tableName}/> : null}
+          {activePerson ? <PersonOverlay name={activePerson.name} tableName={activePerson.tableName} roomName={activePerson.roomName}/> : null}
         </DragOverlay>
         <div className="window-container">
           <Outlet context={{ editMode, setEditMode, people, setPeople, tables, setTables, rooms, setRooms }} />

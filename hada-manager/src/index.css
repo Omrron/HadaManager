@@ -194,6 +194,10 @@ body {
   left: 0;
 }
 
+.half-size{
+  width:50%;
+}
+
 abbr[title] {
   border-bottom: none;
   cursor: inherit;
@@ -316,6 +320,16 @@ abbr[title] {
   margin-block: 15%;
   margin-inline: 5px;
   cursor: pointer;
+}
+
+.person-location-container{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.text-divider{
+  margin-inline: 0.25rem;
+  font-weight: bold;
 }
 
 .good {
