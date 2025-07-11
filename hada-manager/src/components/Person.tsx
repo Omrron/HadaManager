@@ -64,7 +64,7 @@ export function Person({
         {...attributes}
       >
         {name}
-        <div className="subtext one-liner">{tableName}{roomName}</div>
+        <div className="subtext one-liner">{tableName} {roomName}</div>
       </div>
         <button className="depart-button" onClick={() => StopEating(id)}>
           <MdClose className="centered-icon" />

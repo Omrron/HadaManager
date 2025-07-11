@@ -9,7 +9,8 @@ import { v4 as uuidv4 } from "uuid";
 export function Tables() {
     const {editMode, setEditMode, tables, setTables} = useOutletContext<TopLevelProps>();
     const yapperApi = useYapperDialog();
-    var roomId = useLocation().pathname.split('/').pop();
+    var potentialRoomId = useLocation().pathname.split('/').pop();
+    const roomId = potentialRoomId ? potentialRoomId : "";
     var myCurrentTables = roomId ? tables.filter(table => table.roomId === roomId) : [];
     
     const handleSubmit = async () => {
@@ -17,6 +18,7 @@ export function Tables() {
         if(!newTable) return;
         newTable.id = uuidv4();
         newTable.peopleIds=[];
+        newTable.roomId=roomId;
         await setTables(prev => [...prev, newTable]);
     }
 

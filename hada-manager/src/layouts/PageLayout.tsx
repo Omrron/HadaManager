@@ -57,7 +57,7 @@ export function Layout() {
 		if(!table.peopleIds.includes(person.id))
 		{
       setTables(prev => prev.map(_ => _.id === table.id ? {..._, peopleIds:[..._.peopleIds, person.id]} : _));
-      setPeople(prev => prev.map(_ => _.id === person.id ? {..._, tableName:table.name} : _));
+      setPeople(prev => prev.map(_ => _.id === person.id ? {..._, tableName:table.name, roomName:"pop"} : _));
 			if(person.eatingState === 0) UpdateList(person.id, 1);
 		}
 	}
