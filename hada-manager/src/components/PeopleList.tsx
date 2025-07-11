@@ -20,6 +20,7 @@ interface Props {
   people: PersonType[];
   setPeople: React.Dispatch<React.SetStateAction<PersonType[]>>;
   tables: TableType[];
+  setTables :React.Dispatch<React.SetStateAction<TableType[]>>;
   UpdateList(id:string, state:number):void
 }
 
@@ -29,6 +30,7 @@ export function PeopleList({
   setPeople,
   activeId,
   tables,
+  setTables,
   UpdateList
 }: Props) {
   const eatingStateTimers: Record<string, number> = {};
@@ -143,11 +145,21 @@ export function PeopleList({
 
     if(table)
     {
-      table.peopleIds = table.peopleIds.filter(_ => _ !== id);
+        setTables(prevTables =>
+    prevTables.map(table =>
+      table.peopleIds.includes(id)
+        ? { ...table, peopleIds: table.peopleIds.filter(pid => pid !== id) }
+        : table
+    )
+  );
     }
     if(person)
     {
-      person.tableName = "";
+          setPeople(prev =>
+      prev.map(person =>
+        person.id === id ? { ...person, tableName: "", roomName: "" } : person
+      )
+    );
     }
   }
 

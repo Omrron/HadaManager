@@ -31,7 +31,7 @@ export function Person({
   Delete,
   hidden
 }: Props) {
-  let { name, eatingState = 0, id, tableName, room } = person;
+  let { name, eatingState = 0, id, tableName, roomName } = person;
   const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform } =
     useDraggable({ id: person.id });
 
@@ -64,7 +64,7 @@ export function Person({
         {...attributes}
       >
         {name}
-        <div className="subtext one-liner">{tableName}{room?.name}</div>
+        <div className="subtext one-liner">{tableName}{roomName}</div>
       </div>
         <button className="depart-button" onClick={() => StopEating(id)}>
           <MdClose className="centered-icon" />

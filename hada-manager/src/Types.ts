@@ -1,13 +1,11 @@
 export interface RoomType {
-    tables: TableType[],
-    peopleIds: number[],
     id: string
     name: string,
-    capacity: number
 }
 
 export interface TableType {
     peopleIds: string[],
+    roomId:string,
     id: string,
     name: string,
     capacity: number,
@@ -15,7 +13,7 @@ export interface TableType {
 }
 
 export interface PersonType {
-    room?: RoomType,
+    roomName?: string,
     tableName?: string,
     id: string
     name: string,

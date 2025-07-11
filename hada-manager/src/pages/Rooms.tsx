@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
 import { Room } from "../components/Room"
 import { TopButtons } from "../components/TopButons";
-import type { RoomType, TopLevelProps } from "../Types"
+import type { TopLevelProps } from "../Types"
 import { useOutletContext } from "react-router-dom";
 import { useYapperDialog } from "yapperjs";
 import { AddRoom } from "../components/AddRoomDialog";
 import { v4 as uuidv4 } from "uuid";
 
-const template : RoomType[] = [{id:"123456", capacity:50, name:"חד\"א קצינים שיש לו עכשיו שם ממש אבל ממש אבל מממממששששששש ארוך",
-                                    tables:[],
-                                    peopleIds:[]},
-                                {id:"123789", capacity:5, name:"חד\"א חפשים",
-                                    tables:[],
-                                    peopleIds:[]},];
-
 export function Rooms() {
-    const {editMode, setEditMode, rooms, setRooms} = useOutletContext<TopLevelProps>();
+    const {editMode, setEditMode, rooms, setRooms, tables} = useOutletContext<TopLevelProps>();
     const yapperApi = useYapperDialog();
-    
-    useEffect(() => {
-        setRooms(template);
-    },[]);
 
     const handleSubmit = async () => {
         const newRoom = await yapperApi.showDialog({content:AddRoom});
@@ -28,8 +16,6 @@ export function Rooms() {
             return;
         
         newRoom.id = uuidv4();
-        newRoom.peopleIds = [];
-        newRoom.tables=[];
         
         await setRooms(prev => [...prev,newRoom]);
     }
@@ -38,7 +24,7 @@ export function Rooms() {
         <>
             <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit}/>
             <div className="content-container">
-                {rooms.map(_ => <Room key={_.id} id={_.id} name={_.name} capacity={_.capacity} peopleIds={_.peopleIds} tables={_.tables}/>)}
+                {rooms.map(_ => <Room key={_.id} id={_.id} name={_.name} tables={tables}/>)}
             </div>
             <yapperApi.renderer/>
         </>

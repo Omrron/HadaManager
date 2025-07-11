@@ -1,25 +1,17 @@
-import { useEffect } from "react";
 import { Table } from "../components/Table";
 import { TopButtons } from "../components/TopButons";
-import type { TableType, TopLevelProps } from "../Types";
-import { useOutletContext } from "react-router-dom";
+import type { TopLevelProps } from "../Types";
+import { useLocation, useOutletContext } from "react-router-dom";
 import { useYapperDialog } from "yapperjs";
 import { AddTable } from "../components/AddTableDialog";
 import { v4 as uuidv4 } from "uuid";
 
-const template : TableType[] = [
-    {id:"123", name:"שולחן קצינים וואי יש לו שם ממש ארוך", peopleIds:[], capacity:10, reserved: false},
-    {id:"456", name:"שולחן שומרים", peopleIds:["12","2"], capacity:2, reserved: false},
-    {id:"789", name:"שולחן סדיר", peopleIds:[], capacity:10, reserved: false},
-    {id:"159", name:"שולחן לאלרגיות מוזרות", peopleIds:[], capacity:100, reserved: false},
-];
-
 export function Tables() {
     const {editMode, setEditMode, tables, setTables} = useOutletContext<TopLevelProps>();
     const yapperApi = useYapperDialog();
-        
-    useEffect(() => {setTables(template)},[])
-
+    var roomId = useLocation().pathname.split('/').pop();
+    var myCurrentTables = roomId ? tables.filter(table => table.roomId === roomId) : [];
+    
     const handleSubmit = async () => {
     const newTable = await yapperApi.showDialog({content:AddTable});
         if(!newTable) return;
@@ -37,7 +29,7 @@ export function Tables() {
         <>
             <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit} />
             <div className="content-container">
-                {tables.map((table) => <Table key={table.id} table={table} setReserved={setReserved}/>)}
+                {myCurrentTables.map((table) => <Table key={table.id} table={table} setReserved={setReserved}/>)}
             </div>
             <yapperApi.renderer/>
         </>

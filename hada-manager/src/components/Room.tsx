@@ -1,17 +1,20 @@
 import { Link } from "react-router-dom";
 import type { RoomType, TableType } from "../Types";
 
+type Props = RoomType & {tables: TableType[]}
+
 export function Room({
-  capacity,
   id,
   name,
-  tables: tableIds,
-}: RoomType) {
-  var occupancy = tableIds.reduce(
+  tables,
+}: Props) {
+  const myTables = tables.filter(table => table.roomId === id);
+  var occupancy = myTables.reduce(
     (accumulator: number, currentValue: TableType) =>
       accumulator + currentValue.peopleIds.length,
     0
   );
+  var capacity = myTables.reduce((accumulator: number ,current:TableType) => accumulator + current.capacity, 0);
   const isFull = occupancy >= capacity;
   const isNearFull = occupancy / capacity >= 0.8;
 
