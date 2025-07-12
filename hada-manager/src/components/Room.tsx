@@ -19,7 +19,7 @@ export function Room({
   const isNearFull = occupancy / capacity >= 0.8;
 
   return (
-    <Link key={id} to={`/tables/${id}`} className="outer-component-container" title={name}>
+    <Link key={id} to={`/tables/${id}`} title={name}>
       <button id="container" className="component-container">
         <h2 className="center one-liner"> {name}</h2>
         <div className="center">

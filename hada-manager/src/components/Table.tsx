@@ -18,7 +18,7 @@ export function Table({
 
   return (
     <div
-      className="component-container outer-component-container"
+      className="component-container"
       ref={setNodeRef}
       style={isOver ? {outline:"1px solid var(--pop-color)", filter:"brightness(1.1)"} : {}}
       title={name}

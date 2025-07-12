@@ -5,6 +5,7 @@ import { useLocation, useOutletContext } from "react-router-dom";
 import { useYapperDialog } from "yapperjs";
 import { AddTable } from "../components/AddTableDialog";
 import { v4 as uuidv4 } from "uuid";
+import { MdClose } from "react-icons/md";
 
 export function Tables() {
     const {editMode, setEditMode, tables, setTables} = useOutletContext<TopLevelProps>();
@@ -31,7 +32,15 @@ export function Tables() {
         <>
             <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit} />
             <div className="content-container">
-                {myCurrentTables.map((table) => <Table key={table.id} table={table} setReserved={setReserved}/>)}
+                {myCurrentTables.map((table) => 
+                <div className="outer-component-container">
+                    {editMode && (
+                                <button className="delete-button" onClick={() => {setTables(prev => prev.filter(_ => _.id !== table.id))}}>
+                                    <MdClose className="centered-icon" />
+                                </button>
+                                )}
+                <Table key={table.id} table={table} setReserved={setReserved}/>
+                </div>)}
             </div>
             <yapperApi.renderer/>
         </>
