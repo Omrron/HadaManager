@@ -4,7 +4,7 @@ import type { PersonType, TableType } from "../Types"
 import { FaHourglassEnd, FaHourglassHalf, FaHourglassStart, FaPlus } from "react-icons/fa"
 import { BsSearch } from "react-icons/bs"
 import { v4 as uuidv4 } from "uuid"
-import { miliToMinutes } from "../common/timeFunctions"
+import { minutesToMili } from "../common/timeFunctions"
 import { ConvertHebrewAndEnglish } from "../common/textFunctions"
 
 const changeTimes: number[] = [0.1, 0.1]
@@ -76,7 +76,7 @@ export function PeopleList({
   useEffect(() => {
     people.forEach((person) => {
       if (person.eatingState > 0 && person.eatingState < 3) {
-        const delay = miliToMinutes(changeTimes[person.eatingState - 1])
+        const delay = minutesToMili(changeTimes[person.eatingState - 1])
         eatingStateTimers[person.id] = setTimeout(() => {
           setPeople((prev) =>
             prev.map((_) => (_.id === person.id ? { ..._, eatingState: _.eatingState + 1 } : _))

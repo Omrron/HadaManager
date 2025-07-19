@@ -1,3 +1,3 @@
-export function miliToMinutes(miliseconds: number) {
-    return miliseconds * 60000;
+export function minutesToMili(minutes: number) {
+    return minutes * 60000;
 }
