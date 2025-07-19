@@ -1,21 +1,21 @@
-import { Link } from "react-router-dom";
-import type { TableType } from "../types/TableType";
-import type { RoomType } from "../types/RoomType";
+import { Link } from "react-router-dom"
+import type { TableType } from "../types/TableType"
+import type { RoomType } from "../types/RoomType"
 
-type Props = RoomType & { tables: TableType[] };
+type Props = RoomType & { tables: TableType[] }
 
 export function Room({ id, name, tables }: Props) {
-  const myTables = tables.filter((table) => table.roomId === id);
+  const myTables = tables.filter((table) => table.roomId === id)
   var occupancy = myTables.reduce(
     (accumulator: number, currentValue: TableType) => accumulator + currentValue.peopleIds.length,
     0
-  );
+  )
   var capacity = myTables.reduce(
     (accumulator: number, current: TableType) => accumulator + current.capacity,
     0
-  );
-  const isFull = occupancy >= capacity;
-  const isNearFull = occupancy / capacity >= 0.8;
+  )
+  const isFull = occupancy >= capacity
+  const isNearFull = occupancy / capacity >= 0.8
 
   return (
     <Link key={id} to={`/tables/${id}`} title={name}>
@@ -35,5 +35,5 @@ export function Room({ id, name, tables }: Props) {
         </div>
       </button>
     </Link>
-  );
+  )
 }

@@ -1,17 +1,17 @@
-import { useDroppable } from "@dnd-kit/core";
-import type { TableType } from "../types/TableType";
+import { useDroppable } from "@dnd-kit/core"
+import type { TableType } from "../types/TableType"
 
 interface Props {
-  table: TableType;
-  setReserved(id: string, newState: boolean): void;
+  table: TableType
+  setReserved(id: string, newState: boolean): void
 }
 
 export function Table({ table, setReserved }: Props) {
-  let { id, name, peopleIds, capacity, reserved = false } = table;
-  const { setNodeRef, isOver } = useDroppable({ id });
-  var occupancy = peopleIds.length;
-  const isFull = occupancy >= capacity || reserved;
-  const isNearFull = occupancy / capacity >= 0.8;
+  let { id, name, peopleIds, capacity, reserved = false } = table
+  const { setNodeRef, isOver } = useDroppable({ id })
+  var occupancy = peopleIds.length
+  const isFull = occupancy >= capacity || reserved
+  const isNearFull = occupancy / capacity >= 0.8
 
   return (
     <div
@@ -38,5 +38,5 @@ export function Table({ table, setReserved }: Props) {
         <span>תפוס</span>
       </div>
     </div>
-  );
+  )
 }
