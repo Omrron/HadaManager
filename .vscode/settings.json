@@ -7,6 +7,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file",
   "editor.formatOnPaste": true,
   "typescript.format.enable": true,
   "editor.allowVariableFontsInAccessibilityMode": false
