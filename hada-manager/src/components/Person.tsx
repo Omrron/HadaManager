@@ -1,7 +1,7 @@
 import { MdClose, MdPerson } from "react-icons/md"
-import type { PersonType } from "../Types"
 import { useDraggable } from "@dnd-kit/core"
 import { CSS } from "@dnd-kit/utilities"
+import type { PersonType } from "../types/PersonType"
 
 function stateToColor(state: number) {
   switch (state) {

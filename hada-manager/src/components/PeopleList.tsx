@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 import { Person } from "./Person"
-import type { PersonType, TableType } from "../Types"
 import { FaHourglassEnd, FaHourglassHalf, FaHourglassStart, FaPlus } from "react-icons/fa"
 import { BsSearch } from "react-icons/bs"
 import { v4 as uuidv4 } from "uuid"
 import { minutesToMili } from "../common/timeFunctions"
 import { ConvertHebrewAndEnglish } from "../common/textFunctions"
+import type { PersonType } from "../types/PersonType"
+import type { TableType } from "../types/TableType"
 
 const changeTimes: number[] = [0.1, 0.1]
 

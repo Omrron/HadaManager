@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message"
 import { useForm } from "react-hook-form"
 import type { YapperDialogContentProps } from "yapperjs"
-import type { RoomType } from "../Types"
+import type { RoomType } from "../types/RoomType"
 
 export const AddRoom: React.FC<YapperDialogContentProps<RoomType>> = ({ resolve, cancel }) => {
   const {

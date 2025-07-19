@@ -1,24 +1,24 @@
-import { Room } from "../components/Room"
-import { TopButtons } from "../components/TopButons"
-import type { TopLevelProps } from "../Types"
-import { useOutletContext } from "react-router-dom"
-import { useYapperDialog } from "yapperjs"
-import { AddRoom } from "../components/AddRoomDialog"
-import { v4 as uuidv4 } from "uuid"
-import { MdClose } from "react-icons/md"
+import { Room } from "../components/Room";
+import { TopButtons } from "../components/TopButons";
+import { useOutletContext } from "react-router-dom";
+import { useYapperDialog } from "yapperjs";
+import { AddRoom } from "../components/AddRoomDialog";
+import { v4 as uuidv4 } from "uuid";
+import { MdClose } from "react-icons/md";
+import type { PageContext } from "../types/PageContext";
 
 export function Rooms() {
-  const { editMode, setEditMode, rooms, setRooms, tables } = useOutletContext<TopLevelProps>()
-  const yapperApi = useYapperDialog()
+  const { editMode, setEditMode, rooms, setRooms, tables } = useOutletContext<PageContext>();
+  const yapperApi = useYapperDialog();
 
   const handleSubmit = async () => {
-    const newRoom = await yapperApi.showDialog({ content: AddRoom })
-    if (!newRoom) return
+    const newRoom = await yapperApi.showDialog({ content: AddRoom });
+    if (!newRoom) return;
 
-    newRoom.id = uuidv4()
+    newRoom.id = uuidv4();
 
-    await setRooms((prev) => [...prev, newRoom])
-  }
+    await setRooms((prev) => [...prev, newRoom]);
+  };
 
   return (
     <>
@@ -30,7 +30,7 @@ export function Rooms() {
               <button
                 className="delete-button"
                 onClick={() => {
-                  setRooms((prev) => prev.filter((room) => room.id !== _.id))
+                  setRooms((prev) => prev.filter((room) => room.id !== _.id));
                 }}
               >
                 <MdClose className="centered-icon" />
@@ -42,5 +42,5 @@ export function Rooms() {
       </div>
       <yapperApi.renderer />
     </>
-  )
+  );
 }

@@ -1,23 +1,26 @@
-import { Outlet } from "react-router-dom"
-import { PeopleList } from "../components/PeopleList"
-import { useEffect, useState } from "react"
-import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core"
-import type { PersonType, RoomType, TableType } from "../Types"
-import { PersonOverlay } from "../components/PersonOverlay"
+import { Outlet } from "react-router-dom";
+import { PeopleList } from "../components/PeopleList";
+import { useEffect, useState } from "react";
+import { DndContext, DragOverlay, type DragEndEvent, type DragStartEvent } from "@dnd-kit/core";
+import { PersonOverlay } from "../components/PersonOverlay";
+import type { PersonType } from "../types/PersonType";
+import type { TableType } from "../types/TableType";
+import type { RoomType } from "../types/RoomType";
+import type { PageContext } from "../types/PageContext";
 
 export function Layout() {
-  const [editMode, setEditMode] = useState(false)
-  const [people, setPeople] = useState<PersonType[]>([])
-  const [tables, setTables] = useState<TableType[]>([])
-  const [rooms, setRooms] = useState<RoomType[]>([])
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const activePerson = people.find((p) => p.id === activeId) ?? null
+  const [editMode, setEditMode] = useState(false);
+  const [people, setPeople] = useState<PersonType[]>([]);
+  const [tables, setTables] = useState<TableType[]>([]);
+  const [rooms, setRooms] = useState<RoomType[]>([]);
+  const [activeId, setActiveId] = useState<string | null>(null);
+  const activePerson = people.find((p) => p.id === activeId) ?? null;
 
   useEffect(() => {
     setRooms([
       { id: "123456", name: 'חד"א קצינים שיש לו עכשיו שם ממש אבל ממש אבל מממממששששששש ארוך' },
       { id: "123789", name: 'חד"א חפשים' },
-    ])
+    ]);
 
     setTables([
       {
@@ -52,33 +55,33 @@ export function Layout() {
         capacity: 100,
         reserved: false,
       },
-    ])
+    ]);
 
-    setPeople([{ idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" }])
-  }, [])
+    setPeople([{ idNumber: 123456, name: "עמרי בראון", eatingState: 0, id: "123456" }]);
+  }, []);
 
   const handleDragEnd = (event: DragEndEvent) => {
-    setActiveId(null)
-    document.body.style.cursor = "auto"
-    let addedTable = tables.find((_) => _.id === event.over?.id)
-    let addedPerson = people.find((_) => _.id === event.active.id)
+    setActiveId(null);
+    document.body.style.cursor = "auto";
+    let addedTable = tables.find((_) => _.id === event.over?.id);
+    let addedPerson = people.find((_) => _.id === event.active.id);
 
     if (addedTable && addedPerson) {
-      SeatPerson(addedPerson, addedTable)
+      SeatPerson(addedPerson, addedTable);
     }
-  }
+  };
 
   const handleDragStart = (event: DragStartEvent) => {
-    setActiveId(event.active.id.toString())
-    document.body.style.cursor = "grabbing"
-  }
+    setActiveId(event.active.id.toString());
+    document.body.style.cursor = "grabbing";
+  };
 
   const SeatPerson = (person: PersonType, table: TableType) => {
-    if (table.reserved) return
+    if (table.reserved) return;
 
     let otherContainingTable = tables.find(
       (_) => _.id !== table.id && _.peopleIds.includes(person.id)
-    )
+    );
 
     if (otherContainingTable)
       setTables((prev) =>
@@ -87,12 +90,12 @@ export function Layout() {
             ? { ..._, peopleIds: _.peopleIds.filter((pid) => pid !== person.id) }
             : _
         )
-      )
+      );
 
     if (!table.peopleIds.includes(person.id)) {
       setTables((prev) =>
         prev.map((_) => (_.id === table.id ? { ..._, peopleIds: [..._.peopleIds, person.id] } : _))
-      )
+      );
       setPeople((prev) =>
         prev.map((_) =>
           _.id === person.id
@@ -103,16 +106,27 @@ export function Layout() {
               }
             : _
         )
-      )
-      if (person.eatingState === 0) UpdateList(person.id, 1)
+      );
+      if (person.eatingState === 0) UpdateList(person.id, 1);
     }
-  }
+  };
 
   const UpdateList = (id: string, state: number) => {
     setPeople((prev) =>
       prev.map((person) => (person.id === id ? { ...person, eatingState: state } : person))
-    )
-  }
+    );
+  };
+
+  const pageContext: PageContext = {
+    editMode,
+    setEditMode,
+    people,
+    setPeople,
+    tables,
+    setTables,
+    rooms,
+    setRooms,
+  };
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
@@ -138,20 +152,9 @@ export function Layout() {
           ) : null}
         </DragOverlay>
         <div className="window-container">
-          <Outlet
-            context={{
-              editMode,
-              setEditMode,
-              people,
-              setPeople,
-              tables,
-              setTables,
-              rooms,
-              setRooms,
-            }}
-          />
+          <Outlet context={pageContext} />
         </div>
       </div>
     </DndContext>
-  )
+  );
 }
