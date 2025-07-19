@@ -4,7 +4,7 @@ import { FaHourglassEnd, FaHourglassHalf, FaHourglassStart, FaPlus } from "react
 import { BsSearch } from "react-icons/bs"
 import { v4 as uuidv4 } from "uuid"
 import { minutesToMili } from "../common/timeFunctions"
-import { ConvertHebrewAndEnglish } from "../common/textFunctions"
+import { convertHebrewAndEnglish } from "../common/textFunctions"
 import type { PersonType } from "../types/PersonType"
 import type { TableType } from "../types/TableType"
 
@@ -61,7 +61,7 @@ export function PeopleList({
         people.filter((_) =>
           isNumericSearch
             ? _.idNumber.toString().includes(searchValue)
-            : _.name.includes(searchValue) || _.name.includes(ConvertHebrewAndEnglish(searchValue))
+            : _.name.includes(searchValue) || _.name.includes(convertHebrewAndEnglish(searchValue))
         )
       )
 

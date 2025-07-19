@@ -25,78 +25,31 @@ const EngToHeDict: Record<string, string> = {
   x: "ס",
   y: "ט",
   z: "ז",
-  A: "ש",
-  B: "נ",
-  C: "ב",
-  D: "ג",
-  E: "ק",
-  F: "כ",
-  G: "ע",
-  H: "י",
-  I: "ן",
-  J: "ח",
-  K: "ל",
-  L: "ך",
-  M: "צ",
-  N: "מ",
-  O: "ם",
-  P: "פ",
-  Q: "/",
-  R: "ר",
-  S: "ד",
-  T: "א",
-  U: "ו",
-  V: "ה",
-  W: "'",
-  X: "ס",
-  Y: "ט",
-  Z: "ז",
 }
 
-const HeToEngDict: Record<string, string> = {
-  ש: "a",
-  נ: "b",
-  ב: "c",
-  ג: "d",
-  ק: "e",
-  כ: "f",
-  ע: "g",
-  י: "h",
-  ן: "i",
-  ח: "j",
-  ל: "k",
-  ך: "l",
-  צ: "m",
-  מ: "n",
-  ם: "o",
-  פ: "p",
-  "/": "q",
-  ר: "r",
-  ד: "s",
-  א: "t",
-  ו: "u",
-  ה: "v",
-  "'": "w",
-  ס: "x",
-  ט: "y",
-  ז: "z",
+const HeToEngDict: Record<string, string> = flipDictionary(EngToHeDict) as Record<string, string>
+
+export function flipDictionary(
+  dict: Record<PropertyKey, PropertyKey>
+): Record<PropertyKey, PropertyKey> {
+  return Object.entries(dict).reduce<Record<PropertyKey, PropertyKey>>(
+    (acc, [key, val]) => {
+      if (!acc[val]) {
+        acc[val] = key
+      }
+      return acc
+    },
+    {} as Record<PropertyKey, PropertyKey>
+  )
 }
 
-export function ShortenText(text: string, length: number): string {
-  return text.length > length ? text.substring(0, length) + "... " : text
-}
+export function convertHebrewAndEnglish(text: string): string {
+  let splitText = text.split("")
 
-export function ConvertHebrewAndEnglish(text: string): string {
   //text in Hebrew
-  if (text.split("").find((_) => Object.keys(HeToEngDict).includes(_))) {
-    return text
-      .split("")
-      .map((char) => HeToEngDict[char] ?? char)
-      .join("")
+  if (splitText.find((_) => Object.keys(HeToEngDict).includes(_))) {
+    return splitText.map((char) => HeToEngDict[char] ?? char).join("")
   }
 
-  return text
-    .split("")
-    .map((char) => EngToHeDict[char] ?? char)
-    .join("")
+  return splitText.map((char) => EngToHeDict[char] ?? char).join("")
 }
