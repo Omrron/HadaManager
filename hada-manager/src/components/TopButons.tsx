@@ -1,21 +1,17 @@
-import { FaPlus } from "react-icons/fa";
-import {
-  MdOutlineCalendarMonth,
-  MdOutlineEdit,
-  MdOutlineEditOff,
-} from "react-icons/md";
-import { ImExit } from "react-icons/im";
-import { Link, useLocation } from "react-router-dom";
+import { FaPlus } from "react-icons/fa"
+import { MdOutlineCalendarMonth, MdOutlineEdit, MdOutlineEditOff } from "react-icons/md"
+import { ImExit } from "react-icons/im"
+import { Link, useLocation } from "react-router-dom"
 
 interface Props {
-  editMode: boolean;
-  setEditMode: React.Dispatch<React.SetStateAction<boolean>>;
-  handleForm: () => Promise<void>;
+  editMode: boolean
+  setEditMode: React.Dispatch<React.SetStateAction<boolean>>
+  handleForm: () => Promise<void>
 }
 
 export function TopButtons({ editMode, setEditMode, handleForm }: Props) {
-  const location = useLocation();
-  const isInRoom = location.pathname.includes("tables");
+  const location = useLocation()
+  const isInRoom = location.pathname.includes("tables")
 
   return (
     <div className="buttons-container">
@@ -30,7 +26,11 @@ export function TopButtons({ editMode, setEditMode, handleForm }: Props) {
           <MdOutlineEdit className="centered-icon top-icon" />
         )}
       </button>
-      <button className="top-button" onClick={handleForm} title={isInRoom ? "הוסף שולחן" : "הוסף חדר"}>
+      <button
+        className="top-button"
+        onClick={handleForm}
+        title={isInRoom ? "הוסף שולחן" : "הוסף חדר"}
+      >
         <FaPlus className="centered-icon top-icon" />
       </button>
       <button className="top-button">
@@ -44,5 +44,5 @@ export function TopButtons({ editMode, setEditMode, handleForm }: Props) {
         </Link>
       )}
     </div>
-  );
+  )
 }

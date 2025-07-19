@@ -5,7 +5,7 @@ export interface RoomType {
 
 export interface TableType {
     peopleIds: string[],
-    roomId:string,
+    roomId: string,
     id: string,
     name: string,
     capacity: number,

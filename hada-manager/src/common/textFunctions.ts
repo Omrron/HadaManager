@@ -53,44 +53,43 @@ const EngToHeDict: Record<string, string> = {
     Z: 'ז'
 };
 
-const HeToEngDict : Record<string,string> = {
-    'ש' : 'a',
-    'נ' : 'b',
-    'ב' : 'c',
-    'ג' : 'd',
-    'ק' : 'e',
-    'כ' : 'f',
-    'ע' : 'g',
-    'י' : 'h',
-    'ן' : 'i',
-    'ח' : 'j',
-    'ל' : 'k',
-    'ך' : 'l',
-    'צ' : 'm',
-    'מ' : 'n',
-    'ם' : 'o',
-    'פ' : 'p',
-    '/' : 'q',
-    'ר' : 'r',
-    'ד' : 's',
-    'א' : 't',
-    'ו' : 'u',
-    'ה' : 'v',
-    '\'' : 'w',
-    'ס' : 'x',
-    'ט' : 'y',
-    'ז' : 'z'
+const HeToEngDict: Record<string, string> = {
+    'ש': 'a',
+    'נ': 'b',
+    'ב': 'c',
+    'ג': 'd',
+    'ק': 'e',
+    'כ': 'f',
+    'ע': 'g',
+    'י': 'h',
+    'ן': 'i',
+    'ח': 'j',
+    'ל': 'k',
+    'ך': 'l',
+    'צ': 'm',
+    'מ': 'n',
+    'ם': 'o',
+    'פ': 'p',
+    '/': 'q',
+    'ר': 'r',
+    'ד': 's',
+    'א': 't',
+    'ו': 'u',
+    'ה': 'v',
+    '\'': 'w',
+    'ס': 'x',
+    'ט': 'y',
+    'ז': 'z'
 }
 
 export function ShortenText(text: string, length: number): string {
     return text.length > length ? text.substring(0, length) + "... " : text;
 }
 
-export function ConvertHebrewAndEnglish(text:string) : string {
+export function ConvertHebrewAndEnglish(text: string): string {
 
     //text in Hebrew
-    if(text.split('').find(_ => Object.keys(HeToEngDict).includes(_)))
-    {
+    if (text.split('').find(_ => Object.keys(HeToEngDict).includes(_))) {
         return text.split('').map(char => HeToEngDict[char] ?? char).join('');
     }
 

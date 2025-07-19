@@ -1,44 +1,39 @@
-import { MdClose, MdPerson } from "react-icons/md";
-import type { PersonType } from "../Types";
-import { useDraggable } from "@dnd-kit/core";
-import { CSS } from "@dnd-kit/utilities";
+import { MdClose, MdPerson } from "react-icons/md"
+import type { PersonType } from "../Types"
+import { useDraggable } from "@dnd-kit/core"
+import { CSS } from "@dnd-kit/utilities"
 
 function stateToColor(state: number) {
   switch (state) {
     case 1:
-      return "--good-color";
+      return "--good-color"
     case 2:
-      return "--ok-color";
+      return "--ok-color"
     case 3:
-      return "--bad-color";
+      return "--bad-color"
     default:
-      return "--bright-color";
+      return "--bright-color"
   }
 }
 
 type Props = {
-  StopEating(id: string): void;
-  Delete(id: string): void;
-  editMode: boolean;
-  person: PersonType;
-  hidden:boolean;
-};
+  StopEating(id: string): void
+  Delete(id: string): void
+  editMode: boolean
+  person: PersonType
+  hidden: boolean
+}
 
-export function Person({
-  person,
-  editMode,
-  StopEating,
-  Delete,
-  hidden
-}: Props) {
-  let { name, eatingState = 0, id, tableName, roomName } = person;
-  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform } =
-    useDraggable({ id: person.id });
+export function Person({ person, editMode, StopEating, Delete, hidden }: Props) {
+  let { name, eatingState = 0, id, tableName, roomName } = person
+  const { attributes, listeners, setNodeRef, setActivatorNodeRef, transform } = useDraggable({
+    id: person.id,
+  })
 
   return (
     <div
       ref={setNodeRef}
-      className={`person-container ${hidden ? 'hidden' : ''}`}
+      className={`person-container ${hidden ? "hidden" : ""}`}
       style={{
         transform: CSS.Translate.toString(transform),
         cursor: "grab",
@@ -64,16 +59,21 @@ export function Person({
         {...attributes}
       >
         {name}
-        {tableName &&
-        <div className="person-location-container">
-          <div className="subtext half-size one-liner" title={tableName}>{tableName}</div>
-          <div className="text-divider">|</div>
-          <div className="subtext half-size one-liner" title={roomName}>{roomName}</div>
-        </div>}
+        {tableName && (
+          <div className="person-location-container">
+            <div className="subtext half-size one-liner" title={tableName}>
+              {tableName}
+            </div>
+            <div className="text-divider">|</div>
+            <div className="subtext half-size one-liner" title={roomName}>
+              {roomName}
+            </div>
+          </div>
+        )}
       </div>
-        <button className="depart-button" onClick={() => StopEating(id)}>
-          <MdClose className="centered-icon" />
-        </button>
+      <button className="depart-button" onClick={() => StopEating(id)}>
+        <MdClose className="centered-icon" />
+      </button>
     </div>
-  );
+  )
 }

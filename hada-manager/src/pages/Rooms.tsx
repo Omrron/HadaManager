@@ -1,41 +1,46 @@
 import { Room } from "../components/Room"
-import { TopButtons } from "../components/TopButons";
+import { TopButtons } from "../components/TopButons"
 import type { TopLevelProps } from "../Types"
-import { useOutletContext } from "react-router-dom";
-import { useYapperDialog } from "yapperjs";
-import { AddRoom } from "../components/AddRoomDialog";
-import { v4 as uuidv4 } from "uuid";
-import { MdClose } from "react-icons/md";
+import { useOutletContext } from "react-router-dom"
+import { useYapperDialog } from "yapperjs"
+import { AddRoom } from "../components/AddRoomDialog"
+import { v4 as uuidv4 } from "uuid"
+import { MdClose } from "react-icons/md"
 
 export function Rooms() {
-    const {editMode, setEditMode, rooms, setRooms, tables} = useOutletContext<TopLevelProps>();
-    const yapperApi = useYapperDialog();
+  const { editMode, setEditMode, rooms, setRooms, tables } = useOutletContext<TopLevelProps>()
+  const yapperApi = useYapperDialog()
 
-    const handleSubmit = async () => {
-        const newRoom = await yapperApi.showDialog({content:AddRoom});
-        if(!newRoom)
-            return;
-        
-        newRoom.id = uuidv4();
-        
-        await setRooms(prev => [...prev,newRoom]);
-    }
+  const handleSubmit = async () => {
+    const newRoom = await yapperApi.showDialog({ content: AddRoom })
+    if (!newRoom) return
 
-    return (
-        <>
-            <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit}/>
-            <div className="content-container">
-                {rooms.map(_ => 
-                <div className="outer-component-container">
-                    {editMode && (
-                    <button className="delete-button" onClick={() => {setRooms(prev => prev.filter(room => room.id !== _.id))}}>
-                        <MdClose className="centered-icon" />
-                    </button>
-                    )}
-                    <Room key={_.id} id={_.id} name={_.name} tables={tables}/>
-                </div>)}
-            </div>
-            <yapperApi.renderer/>
-        </>
-    )
+    newRoom.id = uuidv4()
+
+    await setRooms((prev) => [...prev, newRoom])
+  }
+
+  return (
+    <>
+      <TopButtons editMode={editMode} setEditMode={setEditMode} handleForm={handleSubmit} />
+      <div className="content-container">
+        {rooms.map((_) => (
+          <div className="outer-component-container">
+            {editMode && (
+              <button
+                className="delete-button"
+                onClick={() => {
+                  setRooms((prev) => prev.filter((room) => room.id !== _.id))
+                }}
+              >
+                <MdClose className="centered-icon" />
+              </button>
+            )}
+            <Room key={_.id} id={_.id} name={_.name} tables={tables} />
+          </div>
+        ))}
+      </div>
+      <yapperApi.renderer />
+    </>
+  )
 }
