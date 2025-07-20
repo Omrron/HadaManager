@@ -39,6 +39,7 @@ export const AddTable: React.FC<YapperDialogContentProps<TableType>> = ({ resolv
           className="form-input"
           style={{ borderColor: `${errors.capacity === undefined ? "" : "red"}` }}
           {...register("capacity", {
+            valueAsNumber: true,
             required: { value: true, message: "חובה קיבולת של לפחות אדם אחד" },
             min: { value: 1, message: "חובה קיבולת של לפחות אדם אחד" },
           })}
